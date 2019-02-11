@@ -1,3 +1,4 @@
 lib
 wasm
 node_modules
+.npmrc
