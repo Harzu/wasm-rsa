@@ -2,12 +2,12 @@ cd ./src/rsa_rs
 cargo build --target wasm32-unknown-unknown --release | exit 1
 
 cd ../../
-if [ ! -d './build' ]
+if [ ! -d './wasm' ]
 then
-  mkdir ./build
-  mkdir ./build/browser
-  mkdir ./build/nodejs
+  mkdir ./wasm
+  mkdir ./wasm/browser
+  mkdir ./wasm/nodejs
 fi
 
-wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./build/browser
-wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./build/nodejs
+wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
+wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs

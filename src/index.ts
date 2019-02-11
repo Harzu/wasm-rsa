@@ -14,8 +14,8 @@ export default class RSA implements RSAInterface {
 
   constructor () {
     const wasm = (RSA.IS_BROWSER)
-      ? require('../build/browser/rsa_lib')
-      : require('../build/nodejs/rsa_lib')
+      ? require('../wasm/browser/rsa_lib')
+      : require('../wasm/nodejs/rsa_lib')
 
     this.publicInstance = new wasm.RSAPublicKeyPair
     this.privateInstance = new wasm.RSAPrivateKeyPair
