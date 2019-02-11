@@ -3,7 +3,7 @@ import {
   RSAPrivate,
   RSAInterface,
   RSAPublicKeyInterface,
-  RSAPrivateKeyInterface
+  RSAPrivateKeyInterface,
 } from './interfaces'
 
 export default class RSA implements RSAInterface {
@@ -12,13 +12,13 @@ export default class RSA implements RSAInterface {
   private publicInstance: RSAPublicKeyInterface
   private privateInstance: RSAPrivateKeyInterface
 
-  constructor () {
+  constructor() {
     const wasm = (RSA.IS_BROWSER)
       ? require('../wasm/browser/rsa_lib')
       : require('../wasm/nodejs/rsa_lib')
 
-    this.publicInstance = new wasm.RSAPublicKeyPair
-    this.privateInstance = new wasm.RSAPrivateKeyPair
+    this.publicInstance = new wasm.RSAPublicKeyPair()
+    this.privateInstance = new wasm.RSAPrivateKeyPair()
   }
 
   generateRSAPrivate(bits: number): RSAPrivate {
@@ -28,11 +28,11 @@ export default class RSA implements RSAInterface {
 
     try {
       this.privateInstance.generate(bits)
-  
+
       return {
         d: this.privateInstance.get_d(),
         n: this.privateInstance.get_n(),
-        e: this.privateInstance.get_e()
+        e: this.privateInstance.get_e(),
       }
     } catch (error) {
       throw error
@@ -46,10 +46,10 @@ export default class RSA implements RSAInterface {
 
     try {
       this.publicInstance.create(n, e)
-  
+
       return {
         n: this.publicInstance.get_n(),
-        e: this.publicInstance.get_e()
+        e: this.publicInstance.get_e(),
       }
     } catch (error) {
       throw error
@@ -74,7 +74,7 @@ export default class RSA implements RSAInterface {
 
     if (n.length < 1 || e.length < 1) {
       throw new Error(`All rsa public keys not created n: ${n} e: ${e}`)
-    }   
+    }
 
     return { n, e }
   }
@@ -98,7 +98,7 @@ export default class RSA implements RSAInterface {
       if (!verify) {
         throw new Error('Verify message is false')
       }
-  
+
       return verify
     } catch (error) {
       throw error
