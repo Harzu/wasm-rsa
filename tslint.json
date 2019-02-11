@@ -1,0 +1,66 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-eslint-rules",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "quotemark": {
+      "options": [
+        true,
+        "single"
+      ],
+      "severity": "warning"
+    },
+    "indent": {
+      "options": [
+        "spaces",
+        4
+      ],
+      "severity": "error"
+    },
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "interface-name": false,
+    "max-classes-per-file": false,
+    "member-access": false,
+    "member-ordering": false,
+    "no-console": [
+      false
+    ],
+    "array-type": false,
+    "o-string-literal": false,
+    "no-empty": false,
+    "no-bitwise": false,
+    "forin": false,
+    // https://medium.com/@eugenkiss/dont-use-semicolons-in-typescript-474ccfe4bdb3
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "no-unexpected-multiline": true,
+    "no-submodule-imports": false,
+    "no-this-assignment": false,
+    "no-implicit-dependencies": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "prefer-for-of": false,
+    "prefer-const": false,
+    "ban-types": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ]
+  },
+  "linterOptions": {
+    "exclude": [
+      "**/node_modules/**",
+      "**/bin/**/*",
+      "**/lib/**/*"
+    ]
+  }
+}
