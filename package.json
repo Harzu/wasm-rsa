@@ -4,9 +4,16 @@
   "main": "lib/index.js",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
+  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Harzu/wasm-rsa.git"
+  },
+
   "scripts": {
     "build": "yarn build:wasm; tsc --build",
     "build:wasm": "sh ./scripts/build.sh",
+    "publish": "npm publish --access",
     "test": "mocha --timeout 99999999 --exit -r ts-node/register src/tests/*.spec.ts"
   },
 
