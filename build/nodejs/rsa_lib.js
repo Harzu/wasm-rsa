@@ -48,6 +48,99 @@ function getUint32Memory() {
     return cachegetUint32Memory;
 }
 
+function freeRSAPublicKeyPair(ptr) {
+
+    wasm.__wbg_rsapublickeypair_free(ptr);
+}
+/**
+*/
+class RSAPublicKeyPair {
+
+    free() {
+        const ptr = this.ptr;
+        this.ptr = 0;
+        freeRSAPublicKeyPair(ptr);
+    }
+
+    /**
+    * @returns {}
+    */
+    constructor() {
+        this.ptr = wasm.rsapublickeypair_new();
+    }
+    /**
+    * @param {string} arg0
+    * @param {string} arg1
+    * @returns {void}
+    */
+    create(arg0, arg1) {
+        const ptr0 = passStringToWasm(arg0);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm(arg1);
+        const len1 = WASM_VECTOR_LEN;
+        try {
+            return wasm.rsapublickeypair_create(this.ptr, ptr0, len0, ptr1, len1);
+
+        } finally {
+            wasm.__wbindgen_free(ptr0, len0 * 1);
+            wasm.__wbindgen_free(ptr1, len1 * 1);
+
+        }
+
+    }
+    /**
+    * @param {string} arg0
+    * @param {string} arg1
+    * @returns {boolean}
+    */
+    verify_message(arg0, arg1) {
+        const ptr0 = passStringToWasm(arg0);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm(arg1);
+        const len1 = WASM_VECTOR_LEN;
+        try {
+            return (wasm.rsapublickeypair_verify_message(this.ptr, ptr0, len0, ptr1, len1)) !== 0;
+
+        } finally {
+            wasm.__wbindgen_free(ptr0, len0 * 1);
+            wasm.__wbindgen_free(ptr1, len1 * 1);
+
+        }
+
+    }
+    /**
+    * @returns {string}
+    */
+    get_e() {
+        const retptr = globalArgumentPtr();
+        wasm.rsapublickeypair_get_e(retptr, this.ptr);
+        const mem = getUint32Memory();
+        const rustptr = mem[retptr / 4];
+        const rustlen = mem[retptr / 4 + 1];
+
+        const realRet = getStringFromWasm(rustptr, rustlen).slice();
+        wasm.__wbindgen_free(rustptr, rustlen * 1);
+        return realRet;
+
+    }
+    /**
+    * @returns {string}
+    */
+    get_n() {
+        const retptr = globalArgumentPtr();
+        wasm.rsapublickeypair_get_n(retptr, this.ptr);
+        const mem = getUint32Memory();
+        const rustptr = mem[retptr / 4];
+        const rustlen = mem[retptr / 4 + 1];
+
+        const realRet = getStringFromWasm(rustptr, rustlen).slice();
+        wasm.__wbindgen_free(rustptr, rustlen * 1);
+        return realRet;
+
+    }
+}
+module.exports.RSAPublicKeyPair = RSAPublicKeyPair;
+
 function freeRSAPrivateKeyPair(ptr) {
 
     wasm.__wbg_rsaprivatekeypair_free(ptr);
@@ -147,99 +240,6 @@ class RSAPrivateKeyPair {
     }
 }
 module.exports.RSAPrivateKeyPair = RSAPrivateKeyPair;
-
-function freeRSAPublicKeyPair(ptr) {
-
-    wasm.__wbg_rsapublickeypair_free(ptr);
-}
-/**
-*/
-class RSAPublicKeyPair {
-
-    free() {
-        const ptr = this.ptr;
-        this.ptr = 0;
-        freeRSAPublicKeyPair(ptr);
-    }
-
-    /**
-    * @returns {}
-    */
-    constructor() {
-        this.ptr = wasm.rsapublickeypair_new();
-    }
-    /**
-    * @param {string} arg0
-    * @param {string} arg1
-    * @returns {void}
-    */
-    create(arg0, arg1) {
-        const ptr0 = passStringToWasm(arg0);
-        const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm(arg1);
-        const len1 = WASM_VECTOR_LEN;
-        try {
-            return wasm.rsapublickeypair_create(this.ptr, ptr0, len0, ptr1, len1);
-
-        } finally {
-            wasm.__wbindgen_free(ptr0, len0 * 1);
-            wasm.__wbindgen_free(ptr1, len1 * 1);
-
-        }
-
-    }
-    /**
-    * @param {string} arg0
-    * @param {string} arg1
-    * @returns {boolean}
-    */
-    verify_message(arg0, arg1) {
-        const ptr0 = passStringToWasm(arg0);
-        const len0 = WASM_VECTOR_LEN;
-        const ptr1 = passStringToWasm(arg1);
-        const len1 = WASM_VECTOR_LEN;
-        try {
-            return (wasm.rsapublickeypair_verify_message(this.ptr, ptr0, len0, ptr1, len1)) !== 0;
-
-        } finally {
-            wasm.__wbindgen_free(ptr0, len0 * 1);
-            wasm.__wbindgen_free(ptr1, len1 * 1);
-
-        }
-
-    }
-    /**
-    * @returns {string}
-    */
-    get_e() {
-        const retptr = globalArgumentPtr();
-        wasm.rsapublickeypair_get_e(retptr, this.ptr);
-        const mem = getUint32Memory();
-        const rustptr = mem[retptr / 4];
-        const rustlen = mem[retptr / 4 + 1];
-
-        const realRet = getStringFromWasm(rustptr, rustlen).slice();
-        wasm.__wbindgen_free(rustptr, rustlen * 1);
-        return realRet;
-
-    }
-    /**
-    * @returns {string}
-    */
-    get_n() {
-        const retptr = globalArgumentPtr();
-        wasm.rsapublickeypair_get_n(retptr, this.ptr);
-        const mem = getUint32Memory();
-        const rustptr = mem[retptr / 4];
-        const rustlen = mem[retptr / 4 + 1];
-
-        const realRet = getStringFromWasm(rustptr, rustlen).slice();
-        wasm.__wbindgen_free(rustptr, rustlen * 1);
-        return realRet;
-
-    }
-}
-module.exports.RSAPublicKeyPair = RSAPublicKeyPair;
 
 module.exports.__wbindgen_throw = function(ptr, len) {
     throw new Error(getStringFromWasm(ptr, len));
