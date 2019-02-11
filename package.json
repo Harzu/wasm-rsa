@@ -5,7 +5,7 @@
   "author": "Ilya fanyShu <ilyashvy@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn build:wasm",
+    "postinstall": "yarn build",
     "start": "node ./index.js",
     "build": "yarn build:wasm; tsc --build",
     "build:wasm": "sh ./scripts/build.sh",
