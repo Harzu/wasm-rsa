@@ -1,6 +1,6 @@
 {
   "name": "wasm-rsa",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "main": "lib/index.js",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
