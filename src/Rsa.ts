@@ -12,11 +12,7 @@ export default class RSA implements RSAInterface {
   private publicInstance: RSAPublicKeyInterface
   private privateInstance: RSAPrivateKeyInterface
 
-  constructor() {
-    const wasm = (RSA.IS_BROWSER)
-      ? require('../wasm/browser/rsa_lib')
-      : require('../wasm/nodejs/rsa_lib')
-
+  constructor(wasm) {
     this.publicInstance = new wasm.RSAPublicKeyPair()
     this.privateInstance = new wasm.RSAPrivateKeyPair()
   }
@@ -105,5 +101,3 @@ export default class RSA implements RSAInterface {
     }
   }
 }
-
-export { RSAInterface }

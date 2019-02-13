@@ -1,4 +1,4 @@
-import RSA from '../index'
+import RSAInit from '../index.node'
 import { expect } from 'chai'
 
 let rsaOne = null
@@ -6,8 +6,8 @@ let rsaTwo = null
 
 describe('RSA sign/verify', () => {
   beforeEach(() => {
-    rsaOne = new RSA
-    rsaTwo = new RSA
+    rsaOne = RSAInit()
+    rsaTwo = RSAInit()
 
     const privateKeys = rsaOne.generateRSAPrivate(1024)
     rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
