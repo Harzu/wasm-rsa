@@ -1,4 +1,7 @@
 # WASM RSA
+[![npm downloads](https://img.shields.io/npm/dt/wasm-rsa.svg)](https://www.npmjs.com/package/wasm-rsa)
+[![npm](https://img.shields.io/npm/v/wasm-rsa.svg?maxAge=2592000)](https://www.npmjs.com/package/wasm-rsa)
+
 WebAssembly rsa library for generate keys and sign/verify message in nodejs and browsers
 
 ## Install
