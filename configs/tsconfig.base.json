@@ -2,15 +2,17 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "target": "es2017",
-    "module": "commonjs",
     "esModuleInterop": true,
-    "resolveJsonModule": true,
     "declaration": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "outDir": "lib"
   },
 
-  "include": ["**/src/**/*"],
-  "exclude": ["**/node_modules/**/*", "**/lib/**/*"]
+  "include": [ "../src/**/*" ],
+  "exclude": [
+    "**/node_modules/**/*",
+    "**/lib/**/*",
+    "../src/tests/**/*",
+    "../src/index.*.ts"
+  ]
 }

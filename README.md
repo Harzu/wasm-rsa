@@ -1,5 +1,5 @@
 # WASM RSA
-WebAssembly rsa library for generate keys and sign/verify message
+WebAssembly rsa library for generate keys and sign/verify message in nodejs and browsers
 
 ## Install
 ```shell
@@ -8,17 +8,17 @@ npm i wasm-rsa
 
 ## Usage
 ```javascript
-import RSA from 'wasm-rsa'
+import RSASetup from 'wasm-rsa'
 
 // First peer
-const rsa = new RSA()
-const privateKeys = rsa.generateRSAPrivate(1024)
-const signature = rsa.signMessage('Hello')
+const rsaPeerOne = RSASetup()
+const privateKeys = rsaPeerOne.generateRSAPrivate(1024)
+const signature = rsaPeerOne.signMessage('Hello')
 
 // Second peer
-const rsa = new RSA()
-const publicKeys = rsa.createRSAPublic(privateN, privateE)
-const verify = rsa.verify('Hello', signature)
+const rsaPeerTwo = RSASetup()
+const publicKeys = rsaPeerTwo.createRSAPublic(privateN, privateE)
+const verify = rsaPeerTwo.verify('Hello', signature)
 
 if (verify) {
   console.log('verify success')
@@ -29,5 +29,17 @@ if (verify) {
 
 for typescript can import interface
 ```javascript
-import RSA, { RSAInterface } from 'wasm-rsa'
+import RSASetup, { RSAInterface } from 'wasm-rsa'
+```
+
+## Browsers
+
+for browser init needed async call function ```RSASetup```
+
+```javascript
+import RSASetup from 'wasm-rsa'
+
+RSASetup().then(rsaInstance => {
+  rsaInstance.generateRSAPrivate(1024)
+})
 ```

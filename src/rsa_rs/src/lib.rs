@@ -71,8 +71,9 @@ impl RSAPrivateKeyPair {
         }
     }
 
-    pub fn generate(&mut self, bits: usize) {
-        let mut rng = StdRng::seed_from_u64(bits as u64);
+    // TODO: Generate random for create rsa keys
+    pub fn generate(&mut self, bits: usize, random_num: usize) {
+        let mut rng = StdRng::seed_from_u64(random_num as u64);
         let keys = rsa::RSAPrivateKey::new(&mut rng, bits).unwrap();
 
         self.n = keys.n().to_str_radix(32);

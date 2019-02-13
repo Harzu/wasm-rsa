@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "module": "esnext",
+    "rootDir": "../src",
+    "outDir": "../lib",
+    "lib": [
+      "dom",
+      "es6"
+    ]
+  },
+
+  "files": [
+    "../src/index.browser.ts"
+  ],
+}

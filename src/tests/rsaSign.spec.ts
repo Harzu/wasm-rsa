@@ -1,4 +1,4 @@
-import RSAInit from '../index.node'
+import RSASetup from '../index.node'
 import { expect } from 'chai'
 
 let rsaOne = null
@@ -6,8 +6,8 @@ let rsaTwo = null
 
 describe('RSA sign/verify', () => {
   beforeEach(() => {
-    rsaOne = RSAInit()
-    rsaTwo = RSAInit()
+    rsaOne = RSASetup()
+    rsaTwo = RSASetup()
 
     const privateKeys = rsaOne.generateRSAPrivate(1024)
     rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
@@ -45,7 +45,7 @@ describe('RSA sign/verify', () => {
     const verify = rsaTwo.verify(message, signature)
     // Assert
     expect(verify).to.be.a('boolean')
-    expect(verify).to.be.eq(true)    
+    expect(verify).to.be.eq(true)
   })
 
   it('Verify message with invalid message', () => {
@@ -60,7 +60,7 @@ describe('RSA sign/verify', () => {
       errorMessage = error.message
     }
     // Assert
-    expect(errorMessage).not.to.be.eq(null)    
+    expect(errorMessage).not.to.be.eq(null)
   })
 
   it('Verify with invalid signature', () => {
@@ -76,6 +76,6 @@ describe('RSA sign/verify', () => {
       errorMessage = error.message
     }
     // Assert
-    expect(errorMessage).not.to.be.eq(null)      
+    expect(errorMessage).not.to.be.eq(null)
   })
 })

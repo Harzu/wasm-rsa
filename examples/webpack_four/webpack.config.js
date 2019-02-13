@@ -1,5 +1,5 @@
-
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const dist = path.resolve(__dirname, "dist");
 
 module.exports = {
@@ -12,11 +12,11 @@ module.exports = {
     rules: [{
       test: /\.wasm$/,
       type: "webassembly/experimental"
-    }],
+    }]
   },
-  node: {
-    fs: 'empty',
-    path: 'empty',
-    util: 'empty'
-  }
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    })
+  ]
 };

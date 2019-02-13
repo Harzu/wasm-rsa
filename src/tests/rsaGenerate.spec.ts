@@ -1,4 +1,4 @@
-import RSAInit from '../index.node'
+import RSASetup from '../index.node'
 import { expect } from 'chai'
 
 let rsaOne = null
@@ -6,8 +6,8 @@ let rsaTwo = null
 
 describe('RSA generate keys', () => {
   beforeEach(() => {
-    rsaOne = RSAInit()
-    rsaTwo = RSAInit()
+    rsaOne = RSASetup()
+    rsaTwo = RSASetup()
   })
 
   it('Generate private key pair', () => {
@@ -80,7 +80,7 @@ describe('RSA generate keys', () => {
       errorMessage = error.message
     }
     // Assert
-    expect(errorMessage).not.to.be.eq(null)   
+    expect(errorMessage).not.to.be.eq(null)
   })
 
   it('Get private keys', () => {
@@ -109,7 +109,7 @@ describe('RSA generate keys', () => {
       errorMessage = error.message
     }
     // Assert
-    expect(errorMessage).not.to.be.eq(null) 
+    expect(errorMessage).not.to.be.eq(null)
   })
 
   it('Get public keys', () => {
@@ -124,7 +124,7 @@ describe('RSA generate keys', () => {
     expect(publicKeys).to.have.property('e')
     expect(publicKeys.e.length).to.be.least(1)
     expect(publicKeys.n.length).to.be.least(1)
-    expect(Number(publicKeys.e)).not.to.be.eq(NaN)   
+    expect(Number(publicKeys.e)).not.to.be.eq(NaN)
   })
 
   it('Get public keys with not created', () => {
@@ -137,6 +137,6 @@ describe('RSA generate keys', () => {
       errorMessage = error.message
     }
     // Assert
-    expect(errorMessage).not.to.be.eq(null) 
+    expect(errorMessage).not.to.be.eq(null)
   })
 })

@@ -13,10 +13,12 @@
   "browser": "lib/index.browser.js",
 
   "scripts": {
-    "build": "yarn build:wasm; tsc --build",
+    "build": "yarn build:wasm; yarn build:browser; yarn build:node",
+    "build:browser": "tsc -p configs/tsconfig.browser.json",
+    "build:node": "tsc -p configs/tsconfig.node.json",
     "build:wasm": "sh ./scripts/build.sh",
     "publish": "npm publish --access",
-    "test": "mocha --timeout 99999999 --exit -r ts-node/register src/tests/*.spec.ts"
+    "test": "mocha --require ts-node/register -P configs/tsconfig.node.json src/tests/*.spec.ts"
   },
 
   "husky": {
@@ -32,7 +34,7 @@
       "git add"
     ]
   },
-
+  
   "devDependencies": {
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",

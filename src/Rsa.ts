@@ -23,7 +23,8 @@ export default class RSA implements RSAInterface {
     }
 
     try {
-      this.privateInstance.generate(bits)
+      const random = Math.floor(Math.random() * 1000000000)
+      this.privateInstance.generate(bits, random)
 
       return {
         d: this.privateInstance.get_d(),

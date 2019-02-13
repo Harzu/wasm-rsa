@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <style>
+    #error {
+      color: red;
+      margin: 10px 0 10px 0;
+      width: 500px;
+      display: block;
+      word-break: break-all;
+    }
+
+    #private_keys {
+      margin-top: 10px;
+    }
+
+    #public {
+      margin-top: 10px;
+    }
+
+    #verify_result {
+      color: green;
+    }
+
+    .keys {
+      margin: 5px 0 5px 0;
+      width: 500px;
+      display: block;
+      word-break: break-all;
+    }
+  </style>
+
+  <h1> RSA Example </h1>
+  <div id="error"></div>
+  <div id="generate">
+    <h2> Generate keys </h2>
+    <div id="private">
+      <button id="generate_private">Generate rsa private keys</button>
+      <div id="private_keys">
+        <span id="private_n" class="keys">n_...</span>
+        <span id="private_d" class="keys">d_...</span>
+        <span id="private_e" class="keys">e_...</span>
+      </div>
+    </div>
+
+    <div id="public">
+      <button id="generate_pub">Generate rsa private keys</button>
+      <div id="public_keys">
+        <div id="pub_e" class="keys">e_...</div>
+        <div id="pub_n" class="keys">n_...</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="sign_recover">
+    <h2>Sign / Verify message</h2>
+    <h3>Input message for sign</h3>
+    <input type="text" name="message" id="inp_message" placeholder="message">
+    <button id="sign"> Sign message </button>
+    <div id="sign_mess", class="keys">signature_...</div>
+  </div>
+
+  <div id="verify">
+    <h2>Verify message</h2>
+    <h3>Input message and signature</h3>
+    <input type="text" name="verify_mess" id="inp_verify_mess" placeholder="message">
+    <input type="text" name="verify_sign" id="inp_verify_sign" placeholder="signature">
+    <div id="verify_result", class="keys"></div>
+    <button id="verify_start"> Verify signature </button>
+  </div>
+</body>
+</html>
