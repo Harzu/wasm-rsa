@@ -6,6 +6,10 @@ WebAssembly rsa library for generate keys and sign/verify message in nodejs and 
 npm i wasm-rsa
 ```
 
+## Examples
+
+webpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master/examples/webpack_four)
+
 ## Usage
 ```javascript
 import RSASetup from 'wasm-rsa'

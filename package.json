@@ -1,17 +1,14 @@
 {
   "name": "wasm-rsa",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
-  
   "repository": {
     "type": "git",
     "url": "https://github.com/Harzu/wasm-rsa.git"
   },
-  
   "main": "lib/index.node.js",
   "browser": "lib/index.browser.js",
-
   "scripts": {
     "build": "yarn build:wasm; yarn build:browser; yarn build:node",
     "build:browser": "tsc -p configs/tsconfig.browser.json",
@@ -20,29 +17,26 @@
     "publish": "npm publish --access",
     "test": "mocha --require ts-node/register -P configs/tsconfig.node.json src/tests/*.spec.ts"
   },
-
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
       "pre-push": "npm test"
     }
   },
-
   "lint-staged": {
     "src/*.ts": [
       "tslint",
       "git add"
     ]
   },
-  
   "devDependencies": {
     "@types/chai": "^4.1.6",
     "@types/mocha": "^5.2.5",
     "@types/node": "10.9.4",
-    "husky": "^1.3.1",
-    "mocha": "^5.0.1",
-    "lint-staged": "7.1.2",
     "chai": "4.1.2",
+    "husky": "^1.3.1",
+    "lint-staged": "7.1.2",
+    "mocha": "^5.0.1",
     "ts-node": "^7.0.1",
     "tslint": "5.11.0",
     "tslint-eslint-rules": "5.3.1",
