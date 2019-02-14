@@ -1,13 +1,12 @@
 {
   "name": "wasm-rsa",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Harzu/wasm-rsa.git"
   },
-
   "keywords": [
     "rsa",
     "wasm",
@@ -16,7 +15,6 @@
     "typescript",
     "cryptography"
   ],
-  
   "main": "lib/index.node.js",
   "browser": "lib/index.browser.js",
   "scripts": {
