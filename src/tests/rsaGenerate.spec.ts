@@ -25,6 +25,17 @@ describe('RSA generate keys', () => {
     expect(Number(keys.e)).not.to.be.eq(NaN)
   })
 
+  it('Generate another keys', () => {
+    // Arrange
+    const bits = 1024
+    // Act
+    const keysFirst = rsaOne.generateRSAPrivate(bits)
+    const keysSecond = rsaOne.generateRSAPrivate(bits)
+    // Assert
+    expect(keysFirst.d).not.to.be.equal(keysSecond.d)
+    expect(keysFirst.n).not.to.be.equal(keysSecond.n)
+  })
+
   it('Generate private key pair with invalid bits', () => {
     // Arrange
     let errorMessage = null

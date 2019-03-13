@@ -1,6 +1,6 @@
 export interface RSAPrivateKeyInterface {
   free(): void
-  generate(bits: number, random: number): void
+  generate(bits: number, random: string): void
   sign_message(message: string): string
   get_e(): string
   get_d(): string

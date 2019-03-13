@@ -5,6 +5,7 @@ import {
   RSAPublicKeyInterface,
   RSAPrivateKeyInterface,
 } from './interfaces'
+import { randomBytes } from 'crypto'
 
 export default class RSA implements RSAInterface {
   public static IS_BROWSER: boolean = (typeof window !== 'undefined')
@@ -23,8 +24,8 @@ export default class RSA implements RSAInterface {
     }
 
     try {
-      const random = Math.floor(Math.random() * 1000000000)
-      this.privateInstance.generate(bits, random)
+      const randomSeed = randomBytes(32).toString('hex')
+      this.privateInstance.generate(bits, randomSeed)
 
       return {
         d: this.privateInstance.get_d(),

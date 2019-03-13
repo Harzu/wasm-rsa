@@ -13,16 +13,15 @@ use cfg_if::cfg_if;
 use sha2::{ Digest, Sha256 };
 
 use wasm_bindgen::prelude::*;
-use wasm_bindgen::JsValue;
 
-use rand::{ Rng, SeedableRng };
-use rand::rngs::StdRng;
+use rand::prelude::*;
+use rand::{ SeedableRng };
 
 use rsa::hash::Hashes;
 use rsa::padding::PaddingScheme;
 use rsa::{ RSAPrivateKey, RSAPublicKey, PublicKey };
 
-use num_bigint::{ BigUint, ToBigUint };
+use num_bigint::{ BigUint };
 
 cfg_if! {
     if #[cfg(feature = "wee_alloc")] {
@@ -36,10 +35,6 @@ cfg_if! {
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     fn log(s: &str);
-}
-
-macro_rules! console_log {
-    ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
 }
 
 #[wasm_bindgen]
@@ -71,9 +66,12 @@ impl RSAPrivateKeyPair {
         }
     }
 
-    // TODO: Generate random for create rsa keys
-    pub fn generate(&mut self, bits: usize, random_num: usize) {
-        let mut rng = StdRng::seed_from_u64(random_num as u64);
+    pub fn generate(&mut self, bits: usize, random_seed: &str) {
+        let mut seed_array: [u8; 32] = [0; 32];
+        let decode_seed = hex::decode(random_seed).unwrap();
+        seed_array.copy_from_slice(&decode_seed.as_slice());
+        
+        let mut rng: StdRng = SeedableRng::from_seed(seed_array);
         let keys = rsa::RSAPrivateKey::new(&mut rng, bits).unwrap();
 
         self.n = keys.n().to_str_radix(32);
@@ -83,17 +81,19 @@ impl RSAPrivateKeyPair {
     }
 
     pub fn sign_message(&self, message: &str) -> String {
-        let cloned_self = self.clone();
         let digest = Sha256::digest(message.as_bytes()).to_vec();
-        let instance = cloned_self.rsa_instance.unwrap();
+        match &self.rsa_instance {
+            Some(instance) => {
+                let sign = instance.sign(
+                    PaddingScheme::PKCS1v15,
+                    Some(&Hashes::SHA256),
+                    &digest
+                ).unwrap();
 
-        let sign = instance.sign(
-            PaddingScheme::PKCS1v15,
-            Some(&Hashes::SHA256),
-            &digest
-        ).unwrap();
-
-        hex::encode(&sign)
+                hex::encode(&sign)
+            },
+            None => panic!("Instance not created")
+        }
     }
 
     pub fn get_e(&self) -> String {
@@ -132,22 +132,22 @@ impl RSAPublicKeyPair {
     }
 
     pub fn verify_message(&self, message: &str, signature: &str) -> bool {
-        let cloned_self = self.clone();
         let decode_signature = hex::decode(signature).unwrap();
-        let instance = cloned_self.rsa_instance.unwrap();
         let hash_mess = Sha256::digest(message.as_bytes());
         
-        let verify = match instance.verify(
-            PaddingScheme::PKCS1v15,
-            Some(&Hashes::SHA256),
-            &hash_mess,
-            &decode_signature
-        ) {
-            Ok(v) => true,
-            Err(e) => false
-        };
+        if let Some(instance) = &self.rsa_instance {
+            return match instance.verify(
+                PaddingScheme::PKCS1v15,
+                Some(&Hashes::SHA256),
+                &hash_mess,
+                &decode_signature
+            ) {
+                Ok(_) => true,
+                Err(_) => false
+            }
+        }
 
-        verify
+        panic!("Instance not created")
     }
 
     pub fn get_e(&self) -> String {

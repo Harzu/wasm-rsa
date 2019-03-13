@@ -1,6 +1,6 @@
 {
   "name": "wasm-rsa",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
   "repository": {
@@ -36,6 +36,9 @@
       "tslint",
       "git add"
     ]
+  },
+  "dependencies": {
+    "crypto": "1.0.1"
   },
   "devDependencies": {
     "@types/chai": "^4.1.6",
