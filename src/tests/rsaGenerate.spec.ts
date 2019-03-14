@@ -1,3 +1,4 @@
+import 'mocha'
 import RSASetup from '../index.node'
 import { expect } from 'chai'
 
@@ -5,9 +6,9 @@ let rsaOne = null
 let rsaTwo = null
 
 describe('RSA generate keys', () => {
-  beforeEach(() => {
-    rsaOne = RSASetup()
-    rsaTwo = RSASetup()
+  beforeEach(async () => {
+    rsaOne = await RSASetup()
+    rsaTwo = await RSASetup()
   })
 
   it('Generate private key pair', () => {

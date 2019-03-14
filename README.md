@@ -18,18 +18,26 @@ webpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master
 import RSASetup from 'wasm-rsa'
 
 // First peer
-const rsaPeerOne = RSASetup()
-const privateKeys = rsaPeerOne.generateRSAPrivate(1024)
-const signature = rsaPeerOne.signMessage('Hello')
+let signature = null
+let privateKeys = null
+let privateN = null
+let privateE = null
+RSASetup().then(instance => {
+  privateKeys = instance.generateRSAPrivate(1024)
+  signature = instance.signMessage('Hello')
+  privateN = instance.getN()
+  privateE = instance.getE()
+})
 
 // Second peer
-const rsaPeerTwo = RSASetup()
-const publicKeys = rsaPeerTwo.createRSAPublic(privateN, privateE)
-const verify = rsaPeerTwo.verify('Hello', signature)
-
-if (verify) {
-  console.log('verify success')
-}
+RSASetup().then(instance => {
+  const publicKeys = instance.createRSAPublic(privateN, privateE)
+  const verify = instance.verify('Hello', signature)
+  
+  if (verify) {
+    console.log('verify success')
+  }
+})
 ```
 
 ## TypeScript
@@ -37,16 +45,4 @@ if (verify) {
 for typescript can import interface
 ```javascript
 import RSASetup, { RSAInterface } from 'wasm-rsa'
-```
-
-## Browsers
-
-for browser init needed async call function ```RSASetup```
-
-```javascript
-import RSASetup from 'wasm-rsa'
-
-RSASetup().then(rsaInstance => {
-  rsaInstance.generateRSAPrivate(1024)
-})
 ```

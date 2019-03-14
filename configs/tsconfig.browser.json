@@ -5,10 +5,7 @@
     "module": "esnext",
     "rootDir": "../src",
     "outDir": "../lib",
-    "lib": [
-      "dom",
-      "es6"
-    ]
+    "lib": [ "es6", "dom" ]
   },
 
   "files": [
