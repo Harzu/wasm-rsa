@@ -55,8 +55,8 @@ describe('RSA generate keys', () => {
     // Arrange
     const bits = 1024
     // Act
-    const privateKeys = rsaOne.generateRSAPrivate(bits)
-    const publicKeys = rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
+    const { n, e } = rsaOne.generateRSAPrivate(bits)
+    const publicKeys = rsaTwo.createRSAPublic(n, e)
     // Assert
     expect(publicKeys).to.have.property('n')
     expect(publicKeys).to.have.property('e')
@@ -109,6 +109,7 @@ describe('RSA generate keys', () => {
     expect(keys.n.length).to.be.least(1)
     expect(keys.d.length).to.be.least(1)
     expect(Number(keys.e)).not.to.be.eq(NaN)
+    expect(Number(keys.e)).to.be.eq(2001)
   })
 
   it('Get private keys with not created', () => {

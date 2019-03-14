@@ -57,7 +57,7 @@ export default class RSA implements RSAInterface {
   getRSAPrivate(): RSAPrivate {
     const d = this.privateInstance.get_d()
     const n = this.privateInstance.get_n()
-    const e = this.privateInstance.get_d()
+    const e = this.privateInstance.get_e()
 
     if (d.length < 1 || n.length < 1 || e.length < 1) {
       throw new Error(`All rsa private keys not created d: ${d} n: ${n} e: ${e}`)
