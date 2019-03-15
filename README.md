@@ -46,3 +46,27 @@ for typescript can import interface
 ```javascript
 import RSASetup, { RSAInterface } from 'wasm-rsa'
 ```
+
+## For contributers
+
+install rust
+```shell
+curl https://sh.rustup.rs -sSf | sh
+rustup target add wasm32-unknown-unknown
+cargo check --target wasm32-unknown-unknown
+```
+
+install wasm-bingden cli
+```shell
+cargo install wasm-bindgen-cli
+```
+
+build
+```shell
+npm run build
+```
+
+Run test
+```shell
+npm run test
+```

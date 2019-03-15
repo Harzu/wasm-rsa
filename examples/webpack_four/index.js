@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   generate_btn.addEventListener('click', event => {
     event.preventDefault()
     try {
-      const keys = rsaOne.generateRSAPrivate(1024)
+      const keys = rsaOne.generateRSAPrivate(2048)
       div_private_e.textContent = `e_${keys.e}`
       div_private_d.textContent = `d_${keys.d}`
       div_private_n.textContent = `n_${keys.n}`

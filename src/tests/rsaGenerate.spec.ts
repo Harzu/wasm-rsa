@@ -4,6 +4,7 @@ import { expect } from 'chai'
 
 let rsaOne = null
 let rsaTwo = null
+const bits = 2048
 
 describe('RSA generate keys', () => {
   beforeEach(async () => {
@@ -12,8 +13,6 @@ describe('RSA generate keys', () => {
   })
 
   it('Generate private key pair', () => {
-    // Arrange
-    const bits = 1024
     // Act
     const keys = rsaOne.generateRSAPrivate(bits)
     // Assert
@@ -27,8 +26,6 @@ describe('RSA generate keys', () => {
   })
 
   it('Generate another keys', () => {
-    // Arrange
-    const bits = 1024
     // Act
     const keysFirst = rsaOne.generateRSAPrivate(bits)
     const keysSecond = rsaOne.generateRSAPrivate(bits)
@@ -40,10 +37,9 @@ describe('RSA generate keys', () => {
   it('Generate private key pair with invalid bits', () => {
     // Arrange
     let errorMessage = null
-    const bits = 'dsadas'
     // Act
     try {
-      rsaOne.generateRSAPrivate(bits)
+      rsaOne.generateRSAPrivate('dsadas')
     } catch (error) {
       errorMessage = error.message
     }
@@ -52,8 +48,6 @@ describe('RSA generate keys', () => {
   })
 
   it('Create public keys', () => {
-    // Arrange
-    const bits = 1024
     // Act
     const { n, e } = rsaOne.generateRSAPrivate(bits)
     const publicKeys = rsaTwo.createRSAPublic(n, e)
@@ -68,7 +62,6 @@ describe('RSA generate keys', () => {
   it('Create public keys with invalid e', () => {
     // Arrange
     let errorMessage = null
-    const bits = 1024
     // Act
     try {
       const privateKeys = rsaOne.generateRSAPrivate(bits)
@@ -83,7 +76,6 @@ describe('RSA generate keys', () => {
   it('Create public keys with invalid n', () => {
     // Arrange
     let errorMessage = null
-    const bits = 1024
     // Act
     try {
       const privateKeys = rsaOne.generateRSAPrivate(bits)
@@ -96,8 +88,6 @@ describe('RSA generate keys', () => {
   })
 
   it('Get private keys', () => {
-    // Arrange
-    const bits = 1024
     // Act
     rsaOne.generateRSAPrivate(bits)
     const keys = rsaOne.getRSAPrivate()
@@ -126,8 +116,6 @@ describe('RSA generate keys', () => {
   })
 
   it('Get public keys', () => {
-    // Arrange
-    const bits = 1024
     // Act
     const privateKeys = rsaOne.generateRSAPrivate(bits)
     rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
