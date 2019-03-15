@@ -25,8 +25,9 @@ let privateE = null
 RSASetup().then(instance => {
   privateKeys = instance.generateRSAPrivate(1024)
   signature = instance.signMessage('Hello')
-  privateN = instance.getN()
-  privateE = instance.getE()
+  const { n, e } = instance.getRSAPrivate()
+  privateN = n
+  privateE = e
 })
 
 // Second peer
