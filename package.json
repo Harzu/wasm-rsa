@@ -1,6 +1,6 @@
 {
   "name": "wasm-rsa",
-  "version": "0.2.4",
+  "version": "0.2.6",
   "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
   "license": "MIT",
   "repository": {

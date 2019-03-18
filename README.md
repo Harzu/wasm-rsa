@@ -48,7 +48,7 @@ for typescript can import interface
 import RSASetup, { RSAInterface } from 'wasm-rsa'
 ```
 
-## For contributers
+## For developers
 
 install rust
 ```shell
@@ -60,6 +60,11 @@ cargo check --target wasm32-unknown-unknown
 install wasm-bingden cli
 ```shell
 cargo install wasm-bindgen-cli
+```
+
+clone repo
+```shell
+git clone https://github.com/Harzu/wasm-rsa.git
 ```
 
 build
