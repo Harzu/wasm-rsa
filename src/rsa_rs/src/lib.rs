@@ -74,9 +74,9 @@ impl RSAPrivateKeyPair {
         let mut rng: StdRng = SeedableRng::from_seed(seed_array);
         let keys = rsa::RSAPrivateKey::new(&mut rng, bits).unwrap();
 
-        self.n = keys.n().to_str_radix(32);
-        self.d = keys.d().to_str_radix(32);
-        self.e = keys.e().to_str_radix(32);
+        self.n = keys.n().to_str_radix(16);
+        self.d = keys.d().to_str_radix(16);
+        self.e = keys.e().to_str_radix(16);
         self.rsa_instance = Some(keys);
     }
 
@@ -121,13 +121,13 @@ impl RSAPublicKeyPair {
     }
 
     pub fn create(&mut self, n: &str, e: &str) {
-        let bn_e = BigUint::parse_bytes(e.as_bytes(), 32).unwrap();
-        let bn_n = BigUint::parse_bytes(n.as_bytes(), 32).unwrap();
+        let bn_e = BigUint::parse_bytes(e.as_bytes(), 16).unwrap();
+        let bn_n = BigUint::parse_bytes(n.as_bytes(), 16).unwrap();
 
         let pub_keys = RSAPublicKey::new(bn_n, bn_e).unwrap();
 
-        self.n = pub_keys.n().to_str_radix(32);
-        self.e = pub_keys.e().to_str_radix(32);
+        self.n = pub_keys.n().to_str_radix(16);
+        self.e = pub_keys.e().to_str_radix(16);
         self.rsa_instance = Some(pub_keys);
     }
 

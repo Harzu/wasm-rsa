@@ -99,7 +99,7 @@ describe('RSA generate keys', () => {
     expect(keys.n.length).to.be.least(1)
     expect(keys.d.length).to.be.least(1)
     expect(Number(keys.e)).not.to.be.eq(NaN)
-    expect(Number(keys.e)).to.be.eq(2001)
+    expect(Number(keys.e)).to.be.eq(10001)
   })
 
   it('Get private keys with not created', () => {
