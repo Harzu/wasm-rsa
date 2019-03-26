@@ -31,6 +31,29 @@ export default class RSA implements RSAInterface {
         d: this.privateInstance.get_d(),
         n: this.privateInstance.get_n(),
         e: this.privateInstance.get_e(),
+        primes: this.privateInstance.get_primes().split('_'),
+      }
+    } catch (error) {
+      throw error
+    }
+  }
+
+  generateRSAPrivateFrom(n: string, d: string, e: string, primes: string[]): RSAPrivate {
+    if (!n || !d || !e || !primes) {
+      throw new Error('not all data for create keys')
+    }
+
+    if (primes.length === 0) {
+      throw new Error('primes empty')
+    }
+
+    try {
+      this.privateInstance.generate_from(n, d, e, primes.join('_'))
+      return {
+        primes,
+        d: this.privateInstance.get_d(),
+        n: this.privateInstance.get_n(),
+        e: this.privateInstance.get_e(),
       }
     } catch (error) {
       throw error
@@ -58,12 +81,18 @@ export default class RSA implements RSAInterface {
     const d = this.privateInstance.get_d()
     const n = this.privateInstance.get_n()
     const e = this.privateInstance.get_e()
+    const primes = this.privateInstance.get_primes().split('_')
 
     if (d.length < 1 || n.length < 1 || e.length < 1) {
       throw new Error(`All rsa private keys not created d: ${d} n: ${n} e: ${e}`)
     }
 
-    return { d, n, e }
+    return { d, n, e, primes }
+  }
+
+  getPrivatePrimes(): string[] {
+    const primes = this.privateInstance.get_primes()
+    return primes.split('_')
   }
 
   getRSAPublic(): RSAPublic {
@@ -98,6 +127,30 @@ export default class RSA implements RSAInterface {
       }
 
       return verify
+    } catch (error) {
+      throw error
+    }
+  }
+
+  publicEncrypt(message: string): string {
+    try {
+      if (!message) {
+        throw new Error('message is not define')
+      }
+      const randomSeed = randomBytes(32).toString('hex')
+      return this.publicInstance.encrypt(message, randomSeed)
+    } catch (error) {
+      throw error
+    }
+  }
+
+  privateDecrypt(encryptedMessage: string): string {
+    try {
+      if (!encryptedMessage) {
+        throw new Error('message is not define')
+      }
+
+      return this.privateInstance.decrypt(encryptedMessage)
     } catch (error) {
       throw error
     }

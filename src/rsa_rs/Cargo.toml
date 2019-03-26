@@ -20,6 +20,7 @@ wasm-bindgen = "0.2"
 web-sys = { version = "0.3.10", features = ['console'] }
 num-bigint = { git = "https://github.com/dignifiedquire/num-bigint", features = ["rand", "i128", "u64_digit", "prime"], package = "num-bigint-dig" }
 num-bigint-dig = "0.2"
+num-traits = "0.2"
 
 # The `console_error_panic_hook` crate provides better debugging of panics by
 # logging them with `console.error`. This is great for development, but requires

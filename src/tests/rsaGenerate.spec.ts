@@ -140,4 +140,90 @@ describe('RSA generate keys', () => {
     // Assert
     expect(errorMessage).not.to.be.eq(null)
   })
+
+  it('generate private keys from n, d, e and primes', () => {
+    // Act
+    const { n, d, e, primes } = rsaOne.generateRSAPrivate(1024)
+    const rsaFrom = rsaTwo.generateRSAPrivateFrom(n, d, e, primes)
+    const sign = rsaTwo.signMessage('sign message rsa in created instance with params')
+    // Assert
+    expect(sign).to.be.a('string')
+    expect(sign.length).to.be.least(0)
+    expect(rsaFrom).to.have.property('d')
+    expect(rsaFrom).to.have.property('n')
+    expect(rsaFrom).to.have.property('e')
+    expect(rsaFrom).to.have.property('primes')
+    expect(rsaFrom.n).to.be.equal(n)
+    expect(rsaFrom.d).to.be.equal(d)
+  })
+
+  it('generate rsa from keys with invalid d', () => {
+    // Arrange
+    let errorMessage = null
+    // Act
+    try {
+      const { n, e, primes } = rsaOne.generateRSAPrivate(1024)
+      rsaTwo.generateRSAPrivateFrom(n, undefined, e, primes)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('generate rsa from keys with invalid n', () => {
+    // Arrange
+    let errorMessage = null
+    // Act
+    try {
+      const { d, e, primes } = rsaOne.generateRSAPrivate(1024)
+      rsaTwo.generateRSAPrivateFrom(undefined, d, e, primes)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('generate rsa from keys with invalid e', () => {
+    // Arrange
+    let errorMessage = null
+    // Act
+    try {
+      const { d, n, primes } = rsaOne.generateRSAPrivate(1024)
+      rsaTwo.generateRSAPrivateFrom(n, d, undefined, primes)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('generate rsa from keys with invalid primes', () => {
+    // Arrange
+    let errorMessage = null
+    // Act
+    try {
+      const { d, n, e } = rsaOne.generateRSAPrivate(1024)
+      rsaTwo.generateRSAPrivateFrom(n, d, e, undefined)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('generate rsa from keys with empty primes', () => {
+    // Arrange
+    let errorMessage = null
+    // Act
+    try {
+      const { d, n, e } = rsaOne.generateRSAPrivate(1024)
+      rsaTwo.generateRSAPrivateFrom(n, d, e, [])
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
 })
