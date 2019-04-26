@@ -9,6 +9,7 @@ import { RSAInterface } from './interfaces'
  * RSASetup().then(rsaInstance => {
  *    // code...
  * })
+ *
  * // Async/Await syntax
  * const rsaInstance = await RSASetup()
  */

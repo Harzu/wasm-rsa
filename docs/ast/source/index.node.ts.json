@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 531,
+  "end": 534,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 26,
+      "line": 27,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 531,
+    "end": 534,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 26,
+        "line": 27,
         "column": 0
       }
     },
@@ -254,7 +254,7 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 15\n * @return\n * {Promise}\n ",
+            "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 16\n * @return\n * {Promise}\n ",
             "start": 118,
             "end": 192,
             "loc": {
@@ -270,16 +270,16 @@
           },
           {
             "type": "CommentBlock",
-            "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
+            "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
             "start": 193,
-            "end": 405,
+            "end": 408,
             "loc": {
               "start": {
                 "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 21,
+                "line": 22,
                 "column": 3
               }
             }
@@ -288,43 +288,43 @@
       },
       {
         "type": "ExportDefaultDeclaration",
-        "start": 406,
-        "end": 505,
+        "start": 409,
+        "end": 508,
         "loc": {
           "start": {
-            "line": 22,
+            "line": 23,
             "column": 0
           },
           "end": {
-            "line": 24,
+            "line": 25,
             "column": 1
           }
         },
         "declaration": {
           "type": "FunctionDeclaration",
-          "start": 421,
-          "end": 505,
+          "start": 424,
+          "end": 508,
           "loc": {
             "start": {
-              "line": 22,
+              "line": 23,
               "column": 15
             },
             "end": {
-              "line": 24,
+              "line": 25,
               "column": 1
             }
           },
           "id": {
             "type": "Identifier",
-            "start": 430,
-            "end": 438,
+            "start": 433,
+            "end": 441,
             "loc": {
               "start": {
-                "line": 22,
+                "line": 23,
                 "column": 24
               },
               "end": {
-                "line": 22,
+                "line": 23,
                 "column": 32
               },
               "identifierName": "RSASetup"
@@ -338,58 +338,58 @@
           "params": [],
           "body": {
             "type": "BlockStatement",
-            "start": 441,
-            "end": 505,
+            "start": 444,
+            "end": 508,
             "loc": {
               "start": {
-                "line": 22,
+                "line": 23,
                 "column": 35
               },
               "end": {
-                "line": 24,
+                "line": 25,
                 "column": 1
               }
             },
             "body": [
               {
                 "type": "ReturnStatement",
-                "start": 447,
-                "end": 503,
+                "start": 450,
+                "end": 506,
                 "loc": {
                   "start": {
-                    "line": 23,
+                    "line": 24,
                     "column": 4
                   },
                   "end": {
-                    "line": 23,
+                    "line": 24,
                     "column": 60
                   }
                 },
                 "argument": {
                   "type": "NewExpression",
-                  "start": 454,
-                  "end": 502,
+                  "start": 457,
+                  "end": 505,
                   "loc": {
                     "start": {
-                      "line": 23,
+                      "line": 24,
                       "column": 11
                     },
                     "end": {
-                      "line": 23,
+                      "line": 24,
                       "column": 59
                     }
                   },
                   "callee": {
                     "type": "Identifier",
-                    "start": 458,
-                    "end": 465,
+                    "start": 461,
+                    "end": 468,
                     "loc": {
                       "start": {
-                        "line": 23,
+                        "line": 24,
                         "column": 15
                       },
                       "end": {
-                        "line": 23,
+                        "line": 24,
                         "column": 22
                       },
                       "identifierName": "Promise"
@@ -399,15 +399,15 @@
                   "arguments": [
                     {
                       "type": "ArrowFunctionExpression",
-                      "start": 466,
-                      "end": 501,
+                      "start": 469,
+                      "end": 504,
                       "loc": {
                         "start": {
-                          "line": 23,
+                          "line": 24,
                           "column": 23
                         },
                         "end": {
-                          "line": 23,
+                          "line": 24,
                           "column": 58
                         }
                       },
@@ -418,15 +418,15 @@
                       "params": [
                         {
                           "type": "Identifier",
-                          "start": 467,
-                          "end": 474,
+                          "start": 470,
+                          "end": 477,
                           "loc": {
                             "start": {
-                              "line": 23,
+                              "line": 24,
                               "column": 24
                             },
                             "end": {
-                              "line": 23,
+                              "line": 24,
                               "column": 31
                             },
                             "identifierName": "resolve"
@@ -436,29 +436,29 @@
                       ],
                       "body": {
                         "type": "CallExpression",
-                        "start": 479,
-                        "end": 501,
+                        "start": 482,
+                        "end": 504,
                         "loc": {
                           "start": {
-                            "line": 23,
+                            "line": 24,
                             "column": 36
                           },
                           "end": {
-                            "line": 23,
+                            "line": 24,
                             "column": 58
                           }
                         },
                         "callee": {
                           "type": "Identifier",
-                          "start": 479,
-                          "end": 486,
+                          "start": 482,
+                          "end": 489,
                           "loc": {
                             "start": {
-                              "line": 23,
+                              "line": 24,
                               "column": 36
                             },
                             "end": {
-                              "line": 23,
+                              "line": 24,
                               "column": 43
                             },
                             "identifierName": "resolve"
@@ -468,29 +468,29 @@
                         "arguments": [
                           {
                             "type": "NewExpression",
-                            "start": 487,
-                            "end": 500,
+                            "start": 490,
+                            "end": 503,
                             "loc": {
                               "start": {
-                                "line": 23,
+                                "line": 24,
                                 "column": 44
                               },
                               "end": {
-                                "line": 23,
+                                "line": 24,
                                 "column": 57
                               }
                             },
                             "callee": {
                               "type": "Identifier",
-                              "start": 491,
-                              "end": 494,
+                              "start": 494,
+                              "end": 497,
                               "loc": {
                                 "start": {
-                                  "line": 23,
+                                  "line": 24,
                                   "column": 48
                                 },
                                 "end": {
-                                  "line": 23,
+                                  "line": 24,
                                   "column": 51
                                 },
                                 "identifierName": "RSA"
@@ -500,15 +500,15 @@
                             "arguments": [
                               {
                                 "type": "Identifier",
-                                "start": 495,
-                                "end": 499,
+                                "start": 498,
+                                "end": 502,
                                 "loc": {
                                   "start": {
-                                    "line": 23,
+                                    "line": 24,
                                     "column": 52
                                   },
                                   "end": {
-                                    "line": 23,
+                                    "line": 24,
                                     "column": 56
                                   },
                                   "identifierName": "wasm"
@@ -529,7 +529,7 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 15\n * @return\n * {Promise}\n ",
+              "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 16\n * @return\n * {Promise}\n ",
               "start": 118,
               "end": 192,
               "loc": {
@@ -545,16 +545,16 @@
             },
             {
               "type": "CommentBlock",
-              "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
+              "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
               "start": 193,
-              "end": 405,
+              "end": 408,
               "loc": {
                 "start": {
                   "line": 12,
                   "column": 0
                 },
                 "end": {
-                  "line": 21,
+                  "line": 22,
                   "column": 3
                 }
               }
@@ -565,7 +565,7 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 15\n * @return\n * {Promise}\n ",
+            "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 16\n * @return\n * {Promise}\n ",
             "start": 118,
             "end": 192,
             "loc": {
@@ -581,16 +581,16 @@
           },
           {
             "type": "CommentBlock",
-            "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
+            "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
             "start": 193,
-            "end": 405,
+            "end": 408,
             "loc": {
               "start": {
                 "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 21,
+                "line": 22,
                 "column": 3
               }
             }
@@ -599,15 +599,15 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 506,
-        "end": 530,
+        "start": 509,
+        "end": 533,
         "loc": {
           "start": {
-            "line": 25,
+            "line": 26,
             "column": 0
           },
           "end": {
-            "line": 25,
+            "line": 26,
             "column": 24
           }
         },
@@ -615,29 +615,29 @@
         "specifiers": [
           {
             "type": "ExportSpecifier",
-            "start": 515,
-            "end": 527,
+            "start": 518,
+            "end": 530,
             "loc": {
               "start": {
-                "line": 25,
+                "line": 26,
                 "column": 9
               },
               "end": {
-                "line": 25,
+                "line": 26,
                 "column": 21
               }
             },
             "local": {
               "type": "Identifier",
-              "start": 515,
-              "end": 527,
+              "start": 518,
+              "end": 530,
               "loc": {
                 "start": {
-                  "line": 25,
+                  "line": 26,
                   "column": 9
                 },
                 "end": {
-                  "line": 25,
+                  "line": 26,
                   "column": 21
                 },
                 "identifierName": "RSAInterface"
@@ -646,15 +646,15 @@
             },
             "exported": {
               "type": "Identifier",
-              "start": 515,
-              "end": 527,
+              "start": 518,
+              "end": 530,
               "loc": {
                 "start": {
-                  "line": 25,
+                  "line": 26,
                   "column": 9
                 },
                 "end": {
-                  "line": 25,
+                  "line": 26,
                   "column": 21
                 },
                 "identifierName": "RSAInterface"
@@ -671,7 +671,7 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 15\n * @return\n * {Promise}\n ",
+      "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 16\n * @return\n * {Promise}\n ",
       "start": 118,
       "end": 192,
       "loc": {
@@ -687,16 +687,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
+      "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
       "start": 193,
-      "end": 405,
+      "end": 408,
       "loc": {
         "start": {
           "line": 12,
           "column": 0
         },
         "end": {
-          "line": 21,
+          "line": 22,
           "column": 3
         }
       }
@@ -1207,7 +1207,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 15\n * @return\n * {Promise}\n ",
+      "value": "*\n * @desc\n * undefined\n * @lineNumber\n * 16\n * @return\n * {Promise}\n ",
       "start": 118,
       "end": 192,
       "loc": {
@@ -1223,16 +1223,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
+      "value": "*\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n ",
       "start": 193,
-      "end": 405,
+      "end": 408,
       "loc": {
         "start": {
           "line": 12,
           "column": 0
         },
         "end": {
-          "line": 21,
+          "line": 22,
           "column": 3
         }
       }
@@ -1252,15 +1252,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 406,
-      "end": 412,
+      "start": 409,
+      "end": 415,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 0
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 6
         }
       }
@@ -1280,15 +1280,15 @@
         "updateContext": null
       },
       "value": "default",
-      "start": 413,
-      "end": 420,
+      "start": 416,
+      "end": 423,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 7
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 14
         }
       }
@@ -1307,15 +1307,15 @@
         "binop": null
       },
       "value": "function",
-      "start": 421,
-      "end": 429,
+      "start": 424,
+      "end": 432,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 15
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 23
         }
       }
@@ -1333,15 +1333,15 @@
         "binop": null
       },
       "value": "RSASetup",
-      "start": 430,
-      "end": 438,
+      "start": 433,
+      "end": 441,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 24
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 32
         }
       }
@@ -1358,15 +1358,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 438,
-      "end": 439,
+      "start": 441,
+      "end": 442,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 32
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 33
         }
       }
@@ -1383,15 +1383,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 439,
-      "end": 440,
+      "start": 442,
+      "end": 443,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 33
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 34
         }
       }
@@ -1408,15 +1408,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 441,
-      "end": 442,
+      "start": 444,
+      "end": 445,
       "loc": {
         "start": {
-          "line": 22,
+          "line": 23,
           "column": 35
         },
         "end": {
-          "line": 22,
+          "line": 23,
           "column": 36
         }
       }
@@ -1436,15 +1436,15 @@
         "updateContext": null
       },
       "value": "return",
-      "start": 447,
-      "end": 453,
+      "start": 450,
+      "end": 456,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 4
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 10
         }
       }
@@ -1464,15 +1464,15 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 454,
-      "end": 457,
+      "start": 457,
+      "end": 460,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 11
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 14
         }
       }
@@ -1490,15 +1490,15 @@
         "binop": null
       },
       "value": "Promise",
-      "start": 458,
-      "end": 465,
+      "start": 461,
+      "end": 468,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 15
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 22
         }
       }
@@ -1515,15 +1515,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 465,
-      "end": 466,
+      "start": 468,
+      "end": 469,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 22
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 23
         }
       }
@@ -1540,15 +1540,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 466,
-      "end": 467,
+      "start": 469,
+      "end": 470,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 23
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 24
         }
       }
@@ -1566,15 +1566,15 @@
         "binop": null
       },
       "value": "resolve",
-      "start": 467,
-      "end": 474,
+      "start": 470,
+      "end": 477,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 24
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 31
         }
       }
@@ -1591,15 +1591,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 474,
-      "end": 475,
+      "start": 477,
+      "end": 478,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 31
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 32
         }
       }
@@ -1617,15 +1617,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 476,
-      "end": 478,
+      "start": 479,
+      "end": 481,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 33
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 35
         }
       }
@@ -1643,15 +1643,15 @@
         "binop": null
       },
       "value": "resolve",
-      "start": 479,
-      "end": 486,
+      "start": 482,
+      "end": 489,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 36
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 43
         }
       }
@@ -1668,15 +1668,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 486,
-      "end": 487,
+      "start": 489,
+      "end": 490,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 43
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 44
         }
       }
@@ -1696,15 +1696,15 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 487,
-      "end": 490,
+      "start": 490,
+      "end": 493,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 44
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 47
         }
       }
@@ -1722,15 +1722,15 @@
         "binop": null
       },
       "value": "RSA",
-      "start": 491,
-      "end": 494,
+      "start": 494,
+      "end": 497,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 48
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 51
         }
       }
@@ -1747,15 +1747,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 494,
-      "end": 495,
+      "start": 497,
+      "end": 498,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 51
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 52
         }
       }
@@ -1773,90 +1773,90 @@
         "binop": null
       },
       "value": "wasm",
-      "start": 495,
-      "end": 499,
-      "loc": {
-        "start": {
-          "line": 23,
-          "column": 52
-        },
-        "end": {
-          "line": 23,
-          "column": 56
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 499,
-      "end": 500,
-      "loc": {
-        "start": {
-          "line": 23,
-          "column": 56
-        },
-        "end": {
-          "line": 23,
-          "column": 57
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 500,
-      "end": 501,
-      "loc": {
-        "start": {
-          "line": 23,
-          "column": 57
-        },
-        "end": {
-          "line": 23,
-          "column": 58
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 501,
+      "start": 498,
       "end": 502,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
+          "column": 52
+        },
+        "end": {
+          "line": 24,
+          "column": 56
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 502,
+      "end": 503,
+      "loc": {
+        "start": {
+          "line": 24,
+          "column": 56
+        },
+        "end": {
+          "line": 24,
+          "column": 57
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 503,
+      "end": 504,
+      "loc": {
+        "start": {
+          "line": 24,
+          "column": 57
+        },
+        "end": {
+          "line": 24,
+          "column": 58
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 504,
+      "end": 505,
+      "loc": {
+        "start": {
+          "line": 24,
           "column": 58
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 59
         }
       }
@@ -1874,15 +1874,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 502,
-      "end": 503,
+      "start": 505,
+      "end": 506,
       "loc": {
         "start": {
-          "line": 23,
+          "line": 24,
           "column": 59
         },
         "end": {
-          "line": 23,
+          "line": 24,
           "column": 60
         }
       }
@@ -1899,15 +1899,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 504,
-      "end": 505,
+      "start": 507,
+      "end": 508,
       "loc": {
         "start": {
-          "line": 24,
+          "line": 25,
           "column": 0
         },
         "end": {
-          "line": 24,
+          "line": 25,
           "column": 1
         }
       }
@@ -1927,15 +1927,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 506,
-      "end": 512,
+      "start": 509,
+      "end": 515,
       "loc": {
         "start": {
-          "line": 25,
+          "line": 26,
           "column": 0
         },
         "end": {
-          "line": 25,
+          "line": 26,
           "column": 6
         }
       }
@@ -1952,15 +1952,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 513,
-      "end": 514,
+      "start": 516,
+      "end": 517,
       "loc": {
         "start": {
-          "line": 25,
+          "line": 26,
           "column": 7
         },
         "end": {
-          "line": 25,
+          "line": 26,
           "column": 8
         }
       }
@@ -1978,15 +1978,15 @@
         "binop": null
       },
       "value": "RSAInterface",
-      "start": 515,
-      "end": 527,
+      "start": 518,
+      "end": 530,
       "loc": {
         "start": {
-          "line": 25,
+          "line": 26,
           "column": 9
         },
         "end": {
-          "line": 25,
+          "line": 26,
           "column": 21
         }
       }
@@ -2003,15 +2003,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 528,
-      "end": 529,
+      "start": 531,
+      "end": 532,
       "loc": {
         "start": {
-          "line": 25,
+          "line": 26,
           "column": 22
         },
         "end": {
-          "line": 25,
+          "line": 26,
           "column": 23
         }
       }
@@ -2029,15 +2029,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 529,
-      "end": 530,
+      "start": 532,
+      "end": 533,
       "loc": {
         "start": {
-          "line": 25,
+          "line": 26,
           "column": 23
         },
         "end": {
-          "line": 25,
+          "line": 26,
           "column": 24
         }
       }
@@ -2055,15 +2055,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 531,
-      "end": 531,
+      "start": 534,
+      "end": 534,
       "loc": {
         "start": {
-          "line": 26,
+          "line": 27,
           "column": 0
         },
         "end": {
-          "line": 26,
+          "line": 27,
           "column": 0
         }
       }

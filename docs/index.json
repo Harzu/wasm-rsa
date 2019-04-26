@@ -1179,7 +1179,7 @@
     "__docId__": 65,
     "kind": "file",
     "name": "src/index.browser.ts",
-    "content": "import RSA from './Rsa'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in browser\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default async function RSASetup(): Promise<RSAInterface> {\n  const wasm = await import('../wasm/browser/rsa_lib').then((instance) => instance)\n  return new RSA(wasm)\n}\n\nexport { RSAInterface }\n",
+    "content": "import RSA from './Rsa'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in browser\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default async function RSASetup(): Promise<RSAInterface> {\n  const wasm = await import('../wasm/browser/rsa_lib').then((instance) => instance)\n  return new RSA(wasm)\n}\n\nexport { RSAInterface }\n",
     "static": true,
     "longname": "/Users/fanyshu/Documents/Projects/RUST/rsa-lib/src/index.browser.ts",
     "access": "public",
@@ -1201,9 +1201,9 @@
     "importStyle": "RSASetup",
     "description": "function for init rsa instance in browser",
     "examples": [
-      "// Promise syntax\nRSASetup().then(rsaInstance => {\n   // code...\n})\n// Async/Await syntax\nconst rsaInstance = await RSASetup()"
+      "// Promise syntax\nRSASetup().then(rsaInstance => {\n   // code...\n})\n\n// Async/Await syntax\nconst rsaInstance = await RSASetup()"
     ],
-    "lineNumber": 21,
+    "lineNumber": 22,
     "params": [],
     "return": {
       "types": [
@@ -1215,7 +1215,7 @@
     "__docId__": 67,
     "kind": "file",
     "name": "src/index.node.ts",
-    "content": "import RSA from './Rsa'\nimport * as wasm from '../wasm/nodejs/rsa_lib'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default function RSASetup(): Promise<RSAInterface> {\n  return new Promise((resolve) => resolve(new RSA(wasm)))\n}\n\nexport { RSAInterface }\n",
+    "content": "import RSA from './Rsa'\nimport * as wasm from '../wasm/nodejs/rsa_lib'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default function RSASetup(): Promise<RSAInterface> {\n  return new Promise((resolve) => resolve(new RSA(wasm)))\n}\n\nexport { RSAInterface }\n",
     "static": true,
     "longname": "/Users/fanyshu/Documents/Projects/RUST/rsa-lib/src/index.node.ts",
     "access": "public",
@@ -1237,9 +1237,9 @@
     "importStyle": "RSASetup",
     "description": "function for init rsa instance in node",
     "examples": [
-      "// Promise syntax\nRSASetup().then(rsaInstance => {\n   // code...\n})\n// Async/Await syntax\nconst rsaInstance = await RSASetup()"
+      "// Promise syntax\nRSASetup().then(rsaInstance => {\n   // code...\n})\n\n// Async/Await syntax\nconst rsaInstance = await RSASetup()"
     ],
-    "lineNumber": 22,
+    "lineNumber": 23,
     "params": [],
     "return": {
       "types": [
