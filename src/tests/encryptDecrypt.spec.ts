@@ -4,6 +4,11 @@ import { expect } from 'chai'
 
 let rsaOne = null
 let rsaTwo = null
+let n = null
+let d = null
+let e = null
+let primes = null
+let anotherRsaOne = null
 
 describe('RSA encrypt/decrypt', () => {
   beforeEach(async () => {
@@ -11,7 +16,11 @@ describe('RSA encrypt/decrypt', () => {
     rsaTwo = await RSASetup()
 
     const privateKeys = rsaOne.generateRSAPrivate(1024)
-    rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
+    n = privateKeys.n
+    d = privateKeys.d
+    e = privateKeys.e
+    primes = privateKeys.primes
+    rsaTwo.createRSAPublic(n, e)
   })
 
   it('encrypt message', () => {
@@ -58,5 +67,17 @@ describe('RSA encrypt/decrypt', () => {
     }
     // Assert
     expect(errorMessage).not.to.be.equal(null)
+  })
+
+  it('decrypt message with rsa generate from n, d, e, primes', async () => {
+    // Arrange
+    const message = 'hello'
+    anotherRsaOne = await RSASetup()
+    // Act
+    const encryptedMessage = rsaTwo.publicEncrypt(message)
+    anotherRsaOne.generateRSAPrivateFrom(n, d, e, primes)
+    const decryptedMessage = anotherRsaOne.privateDecrypt(encryptedMessage)
+    // Assert
+    expect(decryptedMessage).to.be.equal(message)
   })
 })
