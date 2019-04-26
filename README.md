@@ -13,6 +13,8 @@ npm i wasm-rsa
 
 webpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master/examples/webpack_four)
 
+## Docs - [Click here](https://harzu.github.io/wasm-rsa/)
+
 ## Usage
 ```javascript
 import RSASetup from 'wasm-rsa'
