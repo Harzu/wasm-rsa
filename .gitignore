@@ -1,6 +1,7 @@
 lib
 wasm
 node_modules
+*.log
 .npmrc
 .DS_Store
 examples/.DS_Store
