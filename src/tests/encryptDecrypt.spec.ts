@@ -8,14 +8,13 @@ let n = null
 let d = null
 let e = null
 let primes = null
-let anotherRsaOne = null
 
 describe('RSA encrypt/decrypt', () => {
   beforeEach(async () => {
     rsaOne = await RSASetup()
     rsaTwo = await RSASetup()
 
-    const privateKeys = rsaOne.generateRSAPrivate(1024)
+    const privateKeys = rsaOne.generateRSAPrivate(2048)
     n = privateKeys.n
     d = privateKeys.d
     e = privateKeys.e
@@ -72,11 +71,10 @@ describe('RSA encrypt/decrypt', () => {
   it('decrypt message with rsa generate from n, d, e, primes', async () => {
     // Arrange
     const message = 'hello'
-    anotherRsaOne = await RSASetup()
     // Act
     const encryptedMessage = rsaTwo.publicEncrypt(message)
-    anotherRsaOne.generateRSAPrivateFrom(n, d, e, primes)
-    const decryptedMessage = anotherRsaOne.privateDecrypt(encryptedMessage)
+    rsaOne.generateRSAPrivateFrom(n, d, e, primes)
+    const decryptedMessage = rsaOne.privateDecrypt(encryptedMessage)
     // Assert
     expect(decryptedMessage).to.be.equal(message)
   })

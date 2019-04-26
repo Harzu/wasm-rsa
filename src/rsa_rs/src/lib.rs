@@ -129,10 +129,13 @@ impl RSAPrivateKeyPair {
         console_error_panic_hook::set_once();
         match &self.private_instance {
             Some(instance) => {
-                let decrypt_message = instance.decrypt(
+                let decrypt_message = match instance.decrypt(
                     PaddingScheme::PKCS1v15,
                     &hex::decode(&ciphermessage).unwrap()
-                ).unwrap();
+                ) {
+                    Ok(res) => res,
+                    Err(e) => panic!("error decrypt {}", e)
+                };
 
                 String::from_utf8(decrypt_message).unwrap()
             },
