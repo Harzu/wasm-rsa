@@ -24,7 +24,7 @@ describe('RSA encrypt/decrypt', () => {
 
   it('encrypt message', () => {
     // Arrange
-    const message = 'hello world!'
+    const message = 'hello'
     // Act
     const encryptedMessage = rsaTwo.publicEncrypt(message)
     // Assert
