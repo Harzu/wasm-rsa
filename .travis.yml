@@ -1,0 +1,7 @@
+os: linux
+language: rust
+
+scripts:
+  - rustup target add wasm32-unknown-unknown
+  - cargo check --target wasm32-unknown-unknown
+  - cargo install wasm-bindgen-cli
