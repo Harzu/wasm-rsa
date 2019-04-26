@@ -113,11 +113,14 @@ impl RSAPrivateKeyPair {
         let digest = Sha256::digest(message.as_bytes()).to_vec();
         match &self.private_instance {
             Some(instance) => {
-                let sign = instance.sign(
+                let sign = match instance.sign(
                     PaddingScheme::PKCS1v15,
                     Some(&Hashes::SHA256),
                     &digest
-                ).unwrap();
+                ) {
+                    Ok(res) => res,
+                    Err(e) => panic!("sign error {}", e)
+                };
 
                 hex::encode(&sign)
             },
@@ -134,7 +137,7 @@ impl RSAPrivateKeyPair {
                     &hex::decode(&ciphermessage).unwrap()
                 ) {
                     Ok(res) => res,
-                    Err(e) => panic!("error decrypt {}", e)
+                    Err(e) => panic!("decrypt error {}", e)
                 };
 
                 String::from_utf8(decrypt_message).unwrap()
@@ -203,11 +206,14 @@ impl RSAPublicKeyPair {
         let mut rng: StdRng = SeedableRng::from_seed(seed_array);
         match &self.public_instance {
             Some(instance) => {
-                let encrypt_message = instance.encrypt(
+                let encrypt_message = match instance.encrypt(
                     &mut rng,
                     PaddingScheme::PKCS1v15,
                     message.as_bytes()
-                ).unwrap();
+                ) {
+                    Ok(res) => res,
+                    Err(e) => panic!("encrypt error {}", e)
+                };
 
                 hex::encode(&encrypt_message)
             },
