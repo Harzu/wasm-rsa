@@ -94,11 +94,11 @@ impl RSAPrivateKeyPair {
                 Err(_) => panic!("error with convert to biguint {}", prime) 
             }
         }
-
+        
         let keys = RSAPrivateKey::from_components(
-            BigUint::from_str_radix(n, 16).unwrap(),
-            BigUint::from_str_radix(e, 16).unwrap(),            
-            BigUint::from_str_radix(d, 16).unwrap(),
+            BigUint::from_str_radix(n, 16).expect("invalid n"),
+            BigUint::from_str_radix(e, 16).expect("invalid e"),            
+            BigUint::from_str_radix(d, 16).expect("invalid d"),
             primes_vec
         );
 
@@ -148,15 +148,15 @@ impl RSAPrivateKeyPair {
     }
 
     pub fn get_e(&self) -> String {
-        self.e.clone()
+        self.e.to_string()
     }
 
     pub fn get_d(&self) -> String {
-        self.d.clone()
+        self.d.to_string()
     }
 
     pub fn get_n(&self) -> String {
-        self.n.clone()
+        self.n.to_string()
     }
 
     pub fn get_primes(&self) -> String {
@@ -188,10 +188,10 @@ impl RSAPublicKeyPair {
 
     pub fn create(&mut self, n: &str, e: &str) {
         console_error_panic_hook::set_once();
-        let bn_e = BigUint::parse_bytes(e.as_bytes(), 16).unwrap();
-        let bn_n = BigUint::parse_bytes(n.as_bytes(), 16).unwrap();
+        let bn_e = BigUint::parse_bytes(e.as_bytes(), 16).expect("invalid e");
+        let bn_n = BigUint::parse_bytes(n.as_bytes(), 16).expect("invalid n");
 
-        let pub_keys = RSAPublicKey::new(bn_n, bn_e).unwrap();
+        let pub_keys = RSAPublicKey::new(bn_n, bn_e).expect("invalid create public instance");
 
         self.n = pub_keys.n().to_str_radix(16);
         self.e = pub_keys.e().to_str_radix(16);
@@ -201,7 +201,7 @@ impl RSAPublicKeyPair {
     pub fn encrypt(&self, message: &str, random_seed: &str) -> String {
         console_error_panic_hook::set_once();
         let mut seed_array: [u8; 32] = [0; 32];
-        let decode_seed = hex::decode(random_seed).unwrap();
+        let decode_seed = hex::decode(random_seed).expect("invalid decode");
         seed_array.copy_from_slice(&decode_seed.as_slice());
         
         let mut rng: StdRng = SeedableRng::from_seed(seed_array);
@@ -243,10 +243,10 @@ impl RSAPublicKeyPair {
     }
 
     pub fn get_e(&self) -> String {
-        self.e.clone()
+        self.e.to_string()
     }
 
     pub fn get_n(&self) -> String {
-        self.n.clone()
+        self.n.to_string()
     }
 }

@@ -23,7 +23,9 @@
     "build:node": "tsc -p configs/tsconfig.node.json",
     "build:wasm": "sh ./scripts/build.sh",
     "publish": "npm publish --access",
-    "test": "TS_NODE_PROJECT=./configs/tsconfig.node.json mocha --timeout 999999999 --require ts-node/register src/tests/*.spec.ts"
+    "test:rust": "cd ./src/rsa_rs && cargo test",
+    "test:ts": "TS_NODE_PROJECT=./configs/tsconfig.node.json mocha --timeout 999999999 --require ts-node/register src/tests/*.spec.ts",
+    "test": "npm run test:rust; npm run test:ts"
   },
   "husky": {
     "hooks": {
