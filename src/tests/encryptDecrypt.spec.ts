@@ -24,9 +24,10 @@ describe('RSA encrypt/decrypt', () => {
 
   it('encrypt message', () => {
     // Arrange
-    const message = 'hello world!'
+    const message = 'hello'
     // Act
     const encryptedMessage = rsaTwo.publicEncrypt(message)
+    console.log(encryptedMessage)
     // Assert
     expect(encryptedMessage).to.be.a('string')
     expect(encryptedMessage).not.to.be.equal(message)

@@ -1,21 +1,62 @@
-import {
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/Rsa.ts | wasm-rsa</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Harzu/wasm-rsa.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Rsa.ts~RSA.html">RSA</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-RSASetup">RSASetup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-RSASetup">RSASetup</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RSAPrivate">RSAPrivate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-typedef">T</span><span data-ice="name"><span><a href="typedef/index.html#static-typedef-RSAPublic">RSAPublic</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Rsa.ts</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
   RSAPublic,
   RSAPrivate,
   RSAInterface,
   RSAPublicKeyInterface,
   RSAPrivateKeyInterface,
-} from './interfaces'
-import { randomBytes } from 'crypto'
+} from &apos;./interfaces&apos;
+import { randomBytes } from &apos;crypto&apos;
 
 /**
  * @desc facade on wasm code.
  * @access private
  * @example
- * import RSASetup from 'wasm-rsa'
+ * import RSASetup from &apos;wasm-rsa&apos;
  * const rsaInstance = await RSASetup()
  */
 export default class RSA implements RSAInterface {
-  public static IS_BROWSER: boolean = (typeof window !== 'undefined')
+  public static IS_BROWSER: boolean = (typeof window !== &apos;undefined&apos;)
 
   private publicInstance: RSAPublicKeyInterface
   private privateInstance: RSAPrivateKeyInterface
@@ -49,19 +90,19 @@ export default class RSA implements RSAInterface {
    * const { n, e, d, primes } = rsaInstance.generateRSAPrivate(2048)
    */
   generateRSAPrivate(bits: number): RSAPrivate {
-    if (typeof bits !== 'number') {
+    if (typeof bits !== &apos;number&apos;) {
       throw new Error(`Invalid bits ${bits}`)
     }
 
     try {
-      const randomSeed = randomBytes(32).toString('hex')
+      const randomSeed = randomBytes(32).toString(&apos;hex&apos;)
       this.privateInstance.generate(bits, randomSeed)
 
       return {
         d: this.privateInstance.get_d(),
         n: this.privateInstance.get_n(),
         e: this.privateInstance.get_e(),
-        primes: this.privateInstance.get_primes().split('_'),
+        primes: this.privateInstance.get_primes().split(&apos;_&apos;),
       }
     } catch (error) {
       throw error
@@ -79,15 +120,15 @@ export default class RSA implements RSAInterface {
    */
   generateRSAPrivateFrom(n: string, d: string, e: string, primes: string[]): RSAPrivate {
     if (!n || !d || !e || !primes) {
-      throw new Error('not all data for create keys')
+      throw new Error(&apos;not all data for create keys&apos;)
     }
 
     if (primes.length === 0) {
-      throw new Error('primes empty')
+      throw new Error(&apos;primes empty&apos;)
     }
 
     try {
-      this.privateInstance.generate_from(n, d, e, primes.join('_'))
+      this.privateInstance.generate_from(n, d, e, primes.join(&apos;_&apos;))
       return {
         primes,
         d: this.privateInstance.get_d(),
@@ -107,7 +148,7 @@ export default class RSA implements RSAInterface {
    * const publicKeys = rsaInstance.createRSAPublic(n, e)
    */
   createRSAPublic(n: string, e: string): RSAPublic {
-    if (!n || !e || n.length < 1 || e.length < 1) {
+    if (!n || !e || n.length &lt; 1 || e.length &lt; 1) {
       throw new Error(`Invalid params for create n: ${n} e: ${e}`)
     }
 
@@ -133,9 +174,9 @@ export default class RSA implements RSAInterface {
     const d = this.privateInstance.get_d()
     const n = this.privateInstance.get_n()
     const e = this.privateInstance.get_e()
-    const primes = this.privateInstance.get_primes().split('_')
+    const primes = this.privateInstance.get_primes().split(&apos;_&apos;)
 
-    if (d.length < 1 || n.length < 1 || e.length < 1) {
+    if (d.length &lt; 1 || n.length &lt; 1 || e.length &lt; 1) {
       throw new Error(`All rsa private keys not created d: ${d} n: ${n} e: ${e}`)
     }
 
@@ -150,7 +191,7 @@ export default class RSA implements RSAInterface {
    */
   getPrivatePrimes(): string[] {
     const primes = this.privateInstance.get_primes()
-    return primes.split('_')
+    return primes.split(&apos;_&apos;)
   }
 
   /**
@@ -163,7 +204,7 @@ export default class RSA implements RSAInterface {
     const n = this.publicInstance.get_n()
     const e = this.publicInstance.get_e()
 
-    if (n.length < 1 || e.length < 1) {
+    if (n.length &lt; 1 || e.length &lt; 1) {
       throw new Error(`All rsa public keys not created n: ${n} e: ${e}`)
     }
 
@@ -175,15 +216,15 @@ export default class RSA implements RSAInterface {
    * @param {string} message - message for sign
    * @returns {string} - signature string
    * @example
-   * const signature = rsaInstance.signMessage('hello')
+   * const signature = rsaInstance.signMessage(&apos;hello&apos;)
    *
-   * signature -> `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58
+   * signature -&gt; `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58
    * 2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9
    * 87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`
    */
   signMessage(message: string): string {
-    if (typeof message !== 'string') {
-      throw new Error('message should be a string')
+    if (typeof message !== &apos;string&apos;) {
+      throw new Error(&apos;message should be a string&apos;)
     }
 
     try {
@@ -201,19 +242,19 @@ export default class RSA implements RSAInterface {
    * @returns {boolean} - verify result
    * @example
    * const verify = rsaInstance.verify(
-   *  'hello',
+   *  &apos;hello&apos;,
    *  `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58
    *   2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9
    *   87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`
    * )
    *
-   * verify -> true
+   * verify -&gt; true
    */
   verify(message: string, signature: string): boolean {
     try {
       const verify = this.publicInstance.verify_message(message, signature)
       if (!verify) {
-        throw new Error('Verify message is false')
+        throw new Error(&apos;Verify message is false&apos;)
       }
 
       return verify
@@ -227,9 +268,9 @@ export default class RSA implements RSAInterface {
    * @param {string} message - data for encrypt
    * @returns {string} - encrypted data
    * @example
-   * const encryptedMessage = rsaInstance.publicEncrypt('hello')
+   * const encryptedMessage = rsaInstance.publicEncrypt(&apos;hello&apos;)
    *
-   * encryptedMessage -> `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160
+   * encryptedMessage -&gt; `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160
    * d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c
    * 87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c
    * e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092
@@ -239,9 +280,9 @@ export default class RSA implements RSAInterface {
   publicEncrypt(message: string): string {
     try {
       if (!message) {
-        throw new Error('message is not define')
+        throw new Error(&apos;message is not define&apos;)
       }
-      const randomSeed = randomBytes(32).toString('hex')
+      const randomSeed = randomBytes(32).toString(&apos;hex&apos;)
       return this.publicInstance.encrypt(message, randomSeed)
     } catch (error) {
       throw error
@@ -261,12 +302,12 @@ export default class RSA implements RSAInterface {
    *   409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`
    * )
    *
-   * decryptMessage -> 'hello'
+   * decryptMessage -&gt; &apos;hello&apos;
    */
   privateDecrypt(encryptedMessage: string): string {
     try {
       if (!encryptedMessage) {
-        throw new Error('message is not define')
+        throw new Error(&apos;message is not define&apos;)
       }
 
       return this.privateInstance.decrypt(encryptedMessage)
@@ -275,3 +316,20 @@ export default class RSA implements RSAInterface {
     }
   }
 }
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

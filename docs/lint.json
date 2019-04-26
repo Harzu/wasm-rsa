@@ -1,0 +1,64 @@
+[
+  {
+    "name": "RSA#generateRSAPrivateFrom",
+    "filePath": "src/Rsa.ts",
+    "lines": [
+      {
+        "lineNumber": 85,
+        "line": "      throw new Error('primes empty')"
+      },
+      {
+        "lineNumber": 86,
+        "line": "    }"
+      },
+      {
+        "lineNumber": 87,
+        "line": ""
+      },
+      {
+        "lineNumber": 88,
+        "line": "    try {"
+      },
+      {
+        "lineNumber": 89,
+        "line": "      this.privateInstance.generate_from(n, d, e, primes.join('_'))"
+      },
+      {
+        "lineNumber": 90,
+        "line": "      return {"
+      },
+      {
+        "lineNumber": 91,
+        "line": "        primes,"
+      },
+      {
+        "lineNumber": 92,
+        "line": "        d: this.privateInstance.get_d(),"
+      },
+      {
+        "lineNumber": 93,
+        "line": "        n: this.privateInstance.get_n(),"
+      },
+      {
+        "lineNumber": 94,
+        "line": "        e: this.privateInstance.get_e(),"
+      },
+      {
+        "lineNumber": 95,
+        "line": "      }"
+      }
+    ],
+    "codeParams": [
+      "n",
+      "d",
+      "e",
+      "primes"
+    ],
+    "docParams": [
+      "n",
+      "e",
+      "d",
+      "primes"
+    ]
+  }
+]

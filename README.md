@@ -17,28 +17,14 @@ webpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master
 ```javascript
 import RSASetup from 'wasm-rsa'
 
-// First peer
-let signature = null
-let privateKeys = null
-let privateN = null
-let privateE = null
-RSASetup().then(instance => {
-  privateKeys = instance.generateRSAPrivate(1024)
-  signature = instance.signMessage('Hello')
-  const { n, e } = instance.getRSAPrivate()
-  privateN = n
-  privateE = e
+// Promise syntax
+RSASetup().then(rsaInstance => {
+  // code...
 })
 
-// Second peer
-RSASetup().then(instance => {
-  const publicKeys = instance.createRSAPublic(privateN, privateE)
-  const verify = instance.verify('Hello', signature)
-  
-  if (verify) {
-    console.log('verify success')
-  }
-})
+// Async/Await syntax
+const rsaInstance = await RSASetup()
+// code...
 ```
 
 ## TypeScript
