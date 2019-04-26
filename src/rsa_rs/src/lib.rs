@@ -130,17 +130,18 @@ impl RSAPrivateKeyPair {
 
     pub fn decrypt(&self, ciphermessage: &str) -> String {
         console_error_panic_hook::set_once();
+        let decode_message = hex::decode(&ciphermessage).expect("invalid decode message");
         match &self.private_instance {
             Some(instance) => {
                 let decrypt_message = match instance.decrypt(
                     PaddingScheme::PKCS1v15,
-                    &hex::decode(&ciphermessage).unwrap()
+                    &decode_message
                 ) {
                     Ok(res) => res,
                     Err(e) => panic!("decrypt error {}", e)
                 };
 
-                String::from_utf8(decrypt_message).unwrap()
+                String::from_utf8(decrypt_message).expect("invalid parse decrypt message")
             },
             None => panic!("Instance not created")
         }
