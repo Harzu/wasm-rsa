@@ -1,13 +1,12 @@
 language: rust
 rust: stable
+node_js: "node"
+before_install:
+  - rustup target add wasm32-unknown-unknown
+  - cargo install wasm-bindgen-cli
 jobs:
   include:
-    - stage: Pre-install 
-      script:
-        - rustup target add wasm32-unknown-unknown
-        - cargo install wasm-bindgen-cli
     - stage: Install
-      node_js: "node"
       script: npm install
     - stage: Build
       script: npm run build
