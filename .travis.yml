@@ -2,7 +2,22 @@ matrix:
   include:
     - language: rust
       rust: stable
-      script:
-        - rustup target add wasm32-unknown-unknown
-        - cargo check --target wasm32-unknown-unknown
-        - cargo install wasm-bindgen-cli
+      jobs:
+        include:
+          - stage: Pre-install    
+            script:
+              - rustup target add wasm32-unknown-unknown
+              - cargo install wasm-bindgen-cli
+    - language: node_js
+      node_js: "node"
+      jobs:
+        include:
+          - stage: Install
+            script:
+              - npm install
+          - stage: Build
+            script:
+              - npm run build
+          - stage: Unit-tests
+            script:
+              - npm run test
