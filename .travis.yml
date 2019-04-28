@@ -6,9 +6,13 @@ env:
 
 before_install: 
   - rustup target add wasm32-unknown-unknown
-  - if [ $CLI_EXISTS == "" ];
-    then cargo install -f wasm-bindgen-cli --version 0.2.33;
+  - cargo install -f wasm-bindgen-cli --version 0.2.33;
+  - echo $CLI_EXISTS
+    set -x
+    if [ $CLI_EXISTS == "" ]; then
+    cargo install -f wasm-bindgen-cli --version 0.2.33;
     fi
+    set +x
 
 cache:
   cargo: true
