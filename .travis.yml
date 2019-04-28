@@ -16,7 +16,7 @@ cache:
     - node_modules
     - ./src/rsa_rs/target
     - ./wasm
-    - ~/.cargo/bin
+    - ~/.cargo
 
 jobs:
   include:
