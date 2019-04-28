@@ -15,12 +15,11 @@ cache:
 
 jobs:
   include:
+    - stage: Install
+      install: cargo install wasm-bindgen-cli --force
+      script: npm install
     - stage: Build
-      install:
-        - cargo install wasm-bindgen-cli --force
-      scripts:
-        - npm install
-        - npm run build
+      script: npm run build
     - stage: Unit tests
       script: npm run test
 
