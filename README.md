@@ -47,7 +47,7 @@ cargo check --target wasm32-unknown-unknown
 
 install wasm-bingden cli
 ```shell
-cargo install wasm-bindgen-cli
+cargo install -f wasm-bindgen-cli --version 0.2.33
 ```
 
 clone repo

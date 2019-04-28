@@ -1,10 +1,15 @@
 language: rust
 rust: stable
 node_js: "10"
+env:
+  - CLI_EXISTS = $(which wasm-bindgen-cli)
 
 before_install: 
   - rustup target add wasm32-unknown-unknown
-  
+  - if [ $CLI_EXISTS == "" ]; then
+      cargo install -f wasm-bindgen-cli --version 0.2.33
+    fi
+
 cache:
   cargo: true
   directories:
@@ -16,7 +21,6 @@ cache:
 jobs:
   include:
     - stage: Install
-      install: cargo install -f wasm-bindgen-cli
       script: npm install
     - stage: Build
       script: npm run build
