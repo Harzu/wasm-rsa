@@ -9,5 +9,5 @@ then
   mkdir ./wasm/nodejs
 fi
 
-wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
-wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs
+$HOME/.cargo/bin/wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
+$HOME/.cargo/bin/wasm-bindgen ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs
