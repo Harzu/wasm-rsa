@@ -5,7 +5,6 @@ node_js: "10"
 script: skip
 before_install: 
   - rustup target add wasm32-unknown-unknown
-  - cargo install wasm-bindgen-cli
   
 cache:
   cargo: true
@@ -20,6 +19,7 @@ jobs:
     - stage: Pre-install
     - stage: Build
       scripts:
+        - cargo install wasm-bindgen-cli --force
         - npm install
         - npm run build
     - stage: Unit tests
