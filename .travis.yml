@@ -2,7 +2,7 @@ language: rust
 rust: stable
 node_js: "10"
 
-install: 
+before_install: 
   - rustup target add wasm32-unknown-unknown
 
 cache:
