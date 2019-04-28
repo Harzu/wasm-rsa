@@ -9,7 +9,8 @@ cache:
   cargo: true
   directories:
     - node_modules
-    - src/rsa_rs/target
+    - ./src/rsa_rs/target
+    - ./wasm
     - ~/.cargo/bin
 
 jobs:
