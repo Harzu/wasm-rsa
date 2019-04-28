@@ -18,7 +18,7 @@
   "main": "lib/index.node.js",
   "browser": "lib/index.browser.js",
   "scripts": {
-    "build": "yarn build:wasm; yarn build:browser; yarn build:node",
+    "build": "npm run build:wasm; npm run build:browser; npm run build:node",
     "build:browser": "tsc -p configs/tsconfig.browser.json",
     "build:node": "tsc -p configs/tsconfig.node.json",
     "build:wasm": "sh ./scripts/build.sh",
