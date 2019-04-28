@@ -2,10 +2,10 @@ language: rust
 rust: stable
 node_js: "10"
 
+script: skip
 before_install: 
   - rustup target add wasm32-unknown-unknown
-
-script: skip
+  - cargo install wasm-bindgen-cli
   
 cache:
   cargo: true
@@ -17,9 +17,9 @@ cache:
 
 jobs:
   include:
+    - stage: Pre-install
     - stage: Build
       scripts:
-        - cargo install wasm-bindgen-cli
         - npm install
         - npm run build
     - stage: Unit tests
