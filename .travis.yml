@@ -4,6 +4,14 @@ node_js: "10"
 
 before_install: 
   - rustup target add wasm32-unknown-unknown
+  
+cache:
+  cargo: true
+  directories:
+    - node_modules
+    - ./src/rsa_rs/target
+    - ./wasm
+    - ~/.cargo/bin
 
 jobs:
   include:
