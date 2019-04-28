@@ -5,6 +5,8 @@ node_js: "10"
 before_install: 
   - rustup target add wasm32-unknown-unknown
 
+script: skip
+  
 cache:
   cargo: true
   directories:
