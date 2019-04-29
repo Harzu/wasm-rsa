@@ -16,5 +16,5 @@ then
   mkdir ./wasm/nodejs
 fi
 
-BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
-BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs
+$BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
+$BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs
