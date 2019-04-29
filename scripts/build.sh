@@ -14,11 +14,10 @@ cargo build --target wasm32-unknown-unknown --release | exit 1
 cd ../../
 if [ ! -d './wasm' ]
 then
-  mkdir ./wasm
-  mkdir ./wasm/browser
-  mkdir ./wasm/nodejs
+  mkdir $WASM_BUILD_PATH
+  mkdir "$WASM_BUILD_PATH/browser"
+  mkdir "$WASM_BUILD_PATH/nodejs"
 fi
 
-echo "$BINDGEN_BIN"
 $BINDGEN_BIN $WASM_FILE_PATH --browser --out-dir $WASM_BUILD_PATH/browser
 $BINDGEN_BIN $WASM_FILE_PATH --nodejs --out-dir $WASM_BUILD_PATH/nodejs
