@@ -19,5 +19,6 @@ then
   mkdir ./wasm/nodejs
 fi
 
+echo "$BINDGEN_BIN"
 $BINDGEN_BIN $WASM_FILE_PATH --browser --out-dir $WASM_BUILD_PATH/browser
 $BINDGEN_BIN $WASM_FILE_PATH --nodejs --out-dir $WASM_BUILD_PATH/nodejs
