@@ -1,6 +1,9 @@
 BINDGEN_BIN=$(which wasm-bindgen)
+TARGET_DIR="`dirname $0`"
+WASM_FILE_PATH="$TARGET_DIR/../src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm"
+WASM_BUILD_PATH="$TARGET_DIR/../wasm"
 
-if [ $BINDGEN_BIN == "" ]; then
+if [ ! -f "$HOME/.cargo/bin/wasm-bindgen" ]; then
   echo "wasm-bindgen is not installed, please install and try again";
   exit 1;
 fi
@@ -16,5 +19,5 @@ then
   mkdir ./wasm/nodejs
 fi
 
-$BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --browser --out-dir ./wasm/browser
-$BINDGEN_BIN ./src/rsa_rs/target/wasm32-unknown-unknown/release/rsa_lib.wasm --nodejs --out-dir ./wasm/nodejs
+$BINDGEN_BIN $WASM_FILE_PATH --browser --out-dir $WASM_BUILD_PATH/browser
+$BINDGEN_BIN $WASM_FILE_PATH --nodejs --out-dir $WASM_BUILD_PATH/nodejs
