@@ -2,11 +2,14 @@ language: rust
 rust: stable
 node_js: "10"
 
+env:
+  - WASM_BIN = $(which wasm-bindgen)
+
 before_install: 
   - rustup target add wasm32-unknown-unknown
-  - if [ $(which wasm-bindgen) != "/home/travis/.cargo/bin/wasm-bindgen" ];
+  - if [ $WASM_BIN != "/home/travis/.cargo/bin/wasm-bindgen" ];
     then cargo install -f wasm-bindgen-cli --version 0.2.33;
-    else echo $(which wasm-bindgen);
+    else echo $WASM_BIN;
     fi
 
 cache:
