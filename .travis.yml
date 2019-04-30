@@ -29,3 +29,5 @@ jobs:
     - stage: Unit tests
       script: npm run test
 
+notifications:
+  email: false
