@@ -1,6 +1,7 @@
 language: rust
 rust: stable
-node_js: "10.15"
+node_js:
+  - "10"
 
 env:
   - WASM_BIN = $(which wasm-bindgen)
