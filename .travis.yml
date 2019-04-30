@@ -1,16 +1,16 @@
 language: rust
 rust: stable
-node_js:
-  - "10"
+node_js: "10"
 
 before_install: 
   - rustup target add wasm32-unknown-unknown
   - if [ ! -f "/home/travis/.cargo/bin/wasm-bindgen" ]; then
       cargo install -f wasm-bindgen-cli --version 0.2.33;
     fi
-
-install:
-  - nvm use 10
+  - if [ ! -d "/home/travis/.nvm/versions/node/v10.15.0" ]; then
+      nvm install 10.15.0;
+    fi
+  - nvm use 10.15.0
 
 cache:
   cargo: true
@@ -19,6 +19,7 @@ cache:
     - ./src/rsa_rs/target
     - ./wasm
     - ~/.cargo
+    - ~/.nvm
 
 jobs:
   include:
