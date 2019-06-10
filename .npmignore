@@ -1,3 +1,7 @@
-node_modules
+# Folders
+target
 examples
+node_modules
+
+# Misc
 .npmrc
