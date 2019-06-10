@@ -46,9 +46,9 @@ rustup target add wasm32-unknown-unknown
 cargo check --target wasm32-unknown-unknown
 ```
 
-install wasm-bingden cli
+install wasm-pack cli
 ```shell
-cargo install -f wasm-bindgen-cli --version 0.2.33
+curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh;
 ```
 
 clone repo
