@@ -4,8 +4,8 @@ node_js: "10"
 
 before_install: 
   - rustup target add wasm32-unknown-unknown
-  - if [ ! -f "/home/travis/.cargo/bin/wasm-bindgen" ]; then
-      cargo install -f wasm-bindgen-cli --version 0.2.33;
+  - if [ ! -f "/home/travis/.cargo/bin/wasm-pack" ]; then
+      curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
     fi
   - if [ ! -d "/home/travis/.nvm/versions/node/v10.15.0" ]; then
       nvm install 10.15.0;
@@ -16,7 +16,7 @@ cache:
   cargo: true
   directories:
     - node_modules
-    - ./src/rsa_rs/target
+    - .target
     - ./wasm
     - ~/.cargo
     - ~/.nvm

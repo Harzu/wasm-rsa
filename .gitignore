@@ -1,7 +1,17 @@
-lib
+# Folders
+/lib
 wasm
 node_modules
+target
+
+# Lock files
+yarn.lock
+package-lock.json
+
+# Logs
 *.log
+
+# Misc
 .npmrc
 .DS_Store
 examples/.DS_Store
