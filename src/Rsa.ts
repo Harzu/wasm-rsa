@@ -5,7 +5,7 @@ import {
   RSAPublicKeyInterface,
   RSAPrivateKeyInterface,
 } from './interfaces'
-import { randomBytes } from 'crypto'
+import randomBytes from 'randombytes'
 
 /**
  * @desc facade on wasm code.
