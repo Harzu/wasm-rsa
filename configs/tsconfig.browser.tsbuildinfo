@@ -1,0 +1,127 @@
+{
+  "program": {
+    "fileInfos": {
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es5.d.ts": {
+        "version": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0",
+        "signature": "1f753cee573dea40df8a9dc873fef5566957b19ad513874f6643d8dfb14842d0"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.d.ts": {
+        "version": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96",
+        "signature": "7994d44005046d1413ea31d046577cdda33b8b2470f30281fd9c8b3c99fe2d96"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.dom.d.ts": {
+        "version": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4",
+        "signature": "973df4e41aea3780ce77073777d37dd5896f684124f4c42409f3a832133837a4"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.core.d.ts": {
+        "version": "2a0390a665763bcc90f0670e43c587928d8fefe2a94a11209c1e22cba7b09f52",
+        "signature": "2a0390a665763bcc90f0670e43c587928d8fefe2a94a11209c1e22cba7b09f52"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.collection.d.ts": {
+        "version": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0",
+        "signature": "dd94d8ef48c562389eb58af8df3a3a34d11367f7c818192aa5f16470d469e3f0"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.generator.d.ts": {
+        "version": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3",
+        "signature": "828413486bdcaa342558e8e4570b1b287b776cb61b4b70b0214bd10c5d9a94c3"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts": {
+        "version": "6c9f73334f8bf47aea685ca5b46a8f7e992a223e96fbceb030f26a4d2324ba21",
+        "signature": "6c9f73334f8bf47aea685ca5b46a8f7e992a223e96fbceb030f26a4d2324ba21"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.promise.d.ts": {
+        "version": "e6b8ff2798f8ebd7a1c7afd8671f2cb67ee1901c422f5964d74b0b34c6574ea2",
+        "signature": "e6b8ff2798f8ebd7a1c7afd8671f2cb67ee1901c422f5964d74b0b34c6574ea2"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts": {
+        "version": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe",
+        "signature": "5e72f949a89717db444e3bd9433468890068bb21a5638d8ab15a1359e05e54fe"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts": {
+        "version": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976",
+        "signature": "f5b242136ae9bfb1cc99a5971cccc44e99947ae6b5ef6fd8aa54b5ade553b976"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts": {
+        "version": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230",
+        "signature": "9ae2860252d6b5f16e2026d8a2c2069db7b2a3295e98b6031d01337b96437230"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts": {
+        "version": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303",
+        "signature": "3e0a459888f32b42138d5a39f706ff2d55d500ab1031e0988b5568b0f67c2303"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts": {
+        "version": "5320d336820b09286cb5c79a797fe213d94919a719cc5360beafb00c6e23798b",
+        "signature": "e4486c1f5ffa9ac2f55a45b1f9238ea7d9e46d6f33c88dbfa943ed1d3cdc57ed"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/rsa.ts": {
+        "version": "cf21bf58ad8cbc943430c85753f68b2d1e392b6d512c958f4f26353c53d80a25",
+        "signature": "eec8884654a33de61cd2357e19c0251008e22d863001beaa8b932163c9ad0d60"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/wasm/browser/rsa_lib.d.ts": {
+        "version": "2a32ff755d5ebcccc691bb20ec8dfc7a0357049eef103370c5635396496d8f27",
+        "signature": "2a32ff755d5ebcccc691bb20ec8dfc7a0357049eef103370c5635396496d8f27"
+      },
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/index.browser.ts": {
+        "version": "2f77fdc6de1ce38931e6661827a56b87d50908c91de50e3386f904b826014236",
+        "signature": "f98fc453cd3a04a08df37231829f87af61115e9b73b9c75841c5678a8872d25d"
+      }
+    },
+    "options": {
+      "forceConsistentCasingInFileNames": true,
+      "target": 2,
+      "moduleResolution": 2,
+      "esModuleInterop": true,
+      "declaration": true,
+      "sourceMap": true,
+      "skipLibCheck": true,
+      "composite": true,
+      "module": 6,
+      "rootDir": "/Users/fanyshu/Documents/Projects/RUST/rsa-lib/src",
+      "outDir": "/Users/fanyshu/Documents/Projects/RUST/rsa-lib/lib",
+      "lib": [
+        "lib.es2015.d.ts",
+        "lib.dom.d.ts"
+      ],
+      "types": [],
+      "project": "configs/tsconfig.browser.json",
+      "configFilePath": "/Users/fanyshu/Documents/Projects/RUST/rsa-lib/configs/tsconfig.browser.json"
+    },
+    "referencedMap": {
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/rsa.ts": [
+        "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts"
+      ],
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/index.browser.ts": [
+        "/users/fanyshu/documents/projects/rust/rsa-lib/src/rsa.ts",
+        "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts",
+        "/users/fanyshu/documents/projects/rust/rsa-lib/wasm/browser/rsa_lib.d.ts"
+      ]
+    },
+    "exportedModulesMap": {
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/index.browser.ts": [
+        "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts"
+      ],
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/rsa.ts": [
+        "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts"
+      ]
+    },
+    "semanticDiagnosticsPerFile": [
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es5.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.dom.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.core.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.collection.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.generator.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.iterable.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.promise.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.proxy.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.reflect.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.symbol.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/interfaces.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/rsa.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/wasm/browser/rsa_lib.d.ts",
+      "/users/fanyshu/documents/projects/rust/rsa-lib/src/index.browser.ts"
+    ]
+  },
+  "version": "3.5.3"
+}
