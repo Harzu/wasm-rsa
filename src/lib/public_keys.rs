@@ -44,7 +44,7 @@ impl RSAPublicKeyPair {
             Some(instance) => {
                 let encrypt_message = match instance.encrypt(
                     &mut rng,
-                    PaddingScheme::PKCS1v15,
+                    PaddingScheme::new_pkcs1v15_encrypt(),
                     message.as_bytes()
                 ) {
                     Ok(res) => res,
@@ -64,8 +64,7 @@ impl RSAPublicKeyPair {
         
         if let Some(instance) = &self.public_instance {
             return match instance.verify(
-                PaddingScheme::PKCS1v15,
-                Some(&Hashes::SHA256),
+                PaddingScheme::new_pkcs1v15_sign(Some(Hash::SHA3_256)),
                 &hash_mess,
                 &decode_signature
             ) {

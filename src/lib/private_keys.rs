@@ -1,6 +1,5 @@
 use super::*;
 use sha2::{ Digest };
-use rsa::{ PublicKey };
 use num_traits::{ Num };
 
 #[wasm_bindgen]
@@ -69,8 +68,7 @@ impl RSAPrivateKeyPair {
         match &self.private_instance {
             Some(instance) => {
                 let sign = match instance.sign(
-                    PaddingScheme::PKCS1v15,
-                    Some(&Hashes::SHA256),
+                    PaddingScheme::new_pkcs1v15_sign(Some(Hash::SHA3_256)),
                     &digest
                 ) {
                     Ok(res) => res,
@@ -89,7 +87,7 @@ impl RSAPrivateKeyPair {
         match &self.private_instance {
             Some(instance) => {
                 let decrypt_message = match instance.decrypt(
-                    PaddingScheme::PKCS1v15,
+                    PaddingScheme::new_pkcs1v15_encrypt(),
                     &decode_message
                 ) {
                     Ok(res) => res,

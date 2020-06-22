@@ -4,9 +4,9 @@ use wasm_bindgen::prelude::*;
 use rand::prelude::*;
 use rand::{ SeedableRng };
 
-use rsa::hash::Hashes;
+use rsa::hash::Hash;
 use rsa::padding::PaddingScheme;
-use rsa::{ RSAPrivateKey, RSAPublicKey };
+use rsa::{ RSAPrivateKey, RSAPublicKey, PublicKeyParts };
 
 use num_bigint_dig::{ BigUint };
 
