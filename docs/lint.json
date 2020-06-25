@@ -4,48 +4,48 @@
     "filePath": "src/Rsa.ts",
     "lines": [
       {
-        "lineNumber": 85,
+        "lineNumber": 80,
+        "line": "    if (primes.length === 0) {"
+      },
+      {
+        "lineNumber": 81,
         "line": "      throw new Error('primes empty')"
       },
       {
-        "lineNumber": 86,
+        "lineNumber": 82,
         "line": "    }"
       },
       {
-        "lineNumber": 87,
+        "lineNumber": 83,
         "line": ""
       },
       {
+        "lineNumber": 84,
+        "line": "    this.privateInstance.generate_from(n, d, e, primes.join('_'))"
+      },
+      {
+        "lineNumber": 85,
+        "line": "    "
+      },
+      {
+        "lineNumber": 86,
+        "line": "    return {"
+      },
+      {
+        "lineNumber": 87,
+        "line": "      primes,"
+      },
+      {
         "lineNumber": 88,
-        "line": "    try {"
+        "line": "      d: this.privateInstance.get_d(),"
       },
       {
         "lineNumber": 89,
-        "line": "      this.privateInstance.generate_from(n, d, e, primes.join('_'))"
+        "line": "      n: this.privateInstance.get_n(),"
       },
       {
         "lineNumber": 90,
-        "line": "      return {"
-      },
-      {
-        "lineNumber": 91,
-        "line": "        primes,"
-      },
-      {
-        "lineNumber": 92,
-        "line": "        d: this.privateInstance.get_d(),"
-      },
-      {
-        "lineNumber": 93,
-        "line": "        n: this.privateInstance.get_n(),"
-      },
-      {
-        "lineNumber": 94,
-        "line": "        e: this.privateInstance.get_e(),"
-      },
-      {
-        "lineNumber": 95,
-        "line": "      }"
+        "line": "      e: this.privateInstance.get_e(),"
       }
     ],
     "codeParams": [
