@@ -53,18 +53,14 @@ export default class RSA implements RSAInterface {
       throw new Error(`Invalid bits ${bits}`)
     }
 
-    try {
-      const randomSeed = randomBytes(32).toString('hex')
-      this.privateInstance.generate(bits, randomSeed)
+    const randomSeed = randomBytes(32).toString('hex')
+    this.privateInstance.generate(bits, randomSeed)
 
-      return {
-        d: this.privateInstance.get_d(),
-        n: this.privateInstance.get_n(),
-        e: this.privateInstance.get_e(),
-        primes: this.privateInstance.get_primes().split('_'),
-      }
-    } catch (error) {
-      throw error
+    return {
+      d: this.privateInstance.get_d(),
+      n: this.privateInstance.get_n(),
+      e: this.privateInstance.get_e(),
+      primes: this.privateInstance.get_primes().split('_'),
     }
   }
   /**
@@ -86,16 +82,13 @@ export default class RSA implements RSAInterface {
       throw new Error('primes empty')
     }
 
-    try {
-      this.privateInstance.generate_from(n, d, e, primes.join('_'))
-      return {
-        primes,
-        d: this.privateInstance.get_d(),
-        n: this.privateInstance.get_n(),
-        e: this.privateInstance.get_e(),
-      }
-    } catch (error) {
-      throw error
+    this.privateInstance.generate_from(n, d, e, primes.join('_'))
+
+    return {
+      primes,
+      d: this.privateInstance.get_d(),
+      n: this.privateInstance.get_n(),
+      e: this.privateInstance.get_e(),
     }
   }
   /**
@@ -111,15 +104,11 @@ export default class RSA implements RSAInterface {
       throw new Error(`Invalid params for create n: ${n} e: ${e}`)
     }
 
-    try {
-      this.publicInstance.create(n, e)
+    this.publicInstance.create(n, e)
 
-      return {
-        n: this.publicInstance.get_n(),
-        e: this.publicInstance.get_e(),
-      }
-    } catch (error) {
-      throw error
+    return {
+      n: this.publicInstance.get_n(),
+      e: this.publicInstance.get_e(),
     }
   }
 
@@ -186,12 +175,7 @@ export default class RSA implements RSAInterface {
       throw new Error('message should be a string')
     }
 
-    try {
-      const signature = this.privateInstance.sign_message(message)
-      return signature
-    } catch (error) {
-      throw error
-    }
+    return this.privateInstance.sign_message(message)
   }
 
   /**
@@ -210,16 +194,13 @@ export default class RSA implements RSAInterface {
    * verify -> true
    */
   verify(message: string, signature: string): boolean {
-    try {
-      const verify = this.publicInstance.verify_message(message, signature)
-      if (!verify) {
-        throw new Error('Verify message is false')
-      }
+    const verify = this.publicInstance.verify_message(message, signature)
 
-      return verify
-    } catch (error) {
-      throw error
+    if (!verify) {
+      throw new Error('Verify message is false')
     }
+
+    return verify
   }
 
   /**
@@ -237,15 +218,12 @@ export default class RSA implements RSAInterface {
    * 409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`
    */
   publicEncrypt(message: string): string {
-    try {
-      if (!message) {
-        throw new Error('message is not define')
-      }
-      const randomSeed = randomBytes(32).toString('hex')
-      return this.publicInstance.encrypt(message, randomSeed)
-    } catch (error) {
-      throw error
+    if (!message) {
+      throw new Error('message is not define')
     }
+
+    const randomSeed = randomBytes(32).toString('hex')
+    return this.publicInstance.encrypt(message, randomSeed)
   }
   /**
    * @desc decrypt message with private keys
@@ -264,14 +242,10 @@ export default class RSA implements RSAInterface {
    * decryptMessage -> 'hello'
    */
   privateDecrypt(encryptedMessage: string): string {
-    try {
-      if (!encryptedMessage) {
-        throw new Error('message is not define')
-      }
-
-      return this.privateInstance.decrypt(encryptedMessage)
-    } catch (error) {
-      throw error
+    if (!encryptedMessage) {
+      throw new Error('message is not define')
     }
+
+    return this.privateInstance.decrypt(encryptedMessage)
   }
 }
