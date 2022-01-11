@@ -10,11 +10,11 @@ describe('RSA sign/verify', () => {
     rsaOne = await RSASetup()
     rsaTwo = await RSASetup()
 
-    const privateKeys = rsaOne.generateRSAPrivate(1024)
-    rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
+    const privateKey = rsaOne.generateRSAPrivate(1024)
+    rsaTwo.createRSAPublic(privateKey.n, privateKey.e)
   })
 
-  it('Sign message', () => {
+  it('OK: sign message', () => {
     // Arrange
     const message = 'Hello'
     // Act
@@ -24,7 +24,7 @@ describe('RSA sign/verify', () => {
     expect(signature.length).to.be.least(1)
   })
 
-  it('Sign message with invalid', () => {
+  it('FAIL: sign message with invalid', () => {
     // Arrange
     let errorMessage = null
     const message = 12345
@@ -38,7 +38,7 @@ describe('RSA sign/verify', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Verify message', () => {
+  it('OK: verify message', () => {
     // Arrange
     const message = 'Hello'
     // Act
@@ -49,7 +49,7 @@ describe('RSA sign/verify', () => {
     expect(verify).to.be.eq(true)
   })
 
-  it('Verify message with invalid message', () => {
+  it('FAIL: verify message with invalid message', () => {
     // Arrange
     let errorMessage = null
     const message = 'Hello'
@@ -64,7 +64,7 @@ describe('RSA sign/verify', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Verify with invalid signature', () => {
+  it('FAIL: verify with invalid signature', () => {
     // Arrange
     let errorMessage = null
     const message = 'Hello'

@@ -1,0 +1,34 @@
+name: Publish Package to npmjs
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code from master
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: '0'
+      
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: prepare
+        run: |
+          rustup target add wasm32-unknown-unknown
+          curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+
+      - name: install npm dependencies
+        run: npm install
+
+      - name: build
+        run: npm run build
+
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -12,29 +12,29 @@ describe('RSA generate keys', () => {
     rsaTwo = await RSASetup()
   })
 
-  it('Generate private key pair', () => {
+  it('OK: generate private key pair', () => {
     // Act
-    const keys = rsaOne.generateRSAPrivate(bits)
+    const key = rsaOne.generateRSAPrivate(bits)
     // Assert
-    expect(keys).to.have.property('n')
-    expect(keys).to.have.property('d')
-    expect(keys).to.have.property('e')
-    expect(keys.e.length).to.be.least(1)
-    expect(keys.n.length).to.be.least(1)
-    expect(keys.d.length).to.be.least(1)
-    expect(Number(keys.e)).not.to.be.eq(NaN)
+    expect(key).to.have.property('n')
+    expect(key).to.have.property('d')
+    expect(key).to.have.property('e')
+    expect(key.e.length).to.be.least(1)
+    expect(key.n.length).to.be.least(1)
+    expect(key.d.length).to.be.least(1)
+    expect(Number(key.e)).not.to.be.eq(NaN)
   })
 
-  it('Generate another keys', () => {
+  it('OK: generate another key', () => {
     // Act
-    const keysFirst = rsaOne.generateRSAPrivate(bits)
-    const keysSecond = rsaOne.generateRSAPrivate(bits)
+    const keyFirst = rsaOne.generateRSAPrivate(bits)
+    const keySecond = rsaOne.generateRSAPrivate(bits)
     // Assert
-    expect(keysFirst.d).not.to.be.equal(keysSecond.d)
-    expect(keysFirst.n).not.to.be.equal(keysSecond.n)
+    expect(keyFirst.d).not.to.be.equal(keySecond.d)
+    expect(keyFirst.n).not.to.be.equal(keySecond.n)
   })
 
-  it('Generate private key pair with invalid bits', () => {
+  it('FAIL: generate private key pair with invalid bits', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -47,25 +47,25 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Create public keys', () => {
+  it('OK: create public key', () => {
     // Act
     const { n, e } = rsaOne.generateRSAPrivate(bits)
-    const publicKeys = rsaTwo.createRSAPublic(n, e)
+    const publicKey = rsaTwo.createRSAPublic(n, e)
     // Assert
-    expect(publicKeys).to.have.property('n')
-    expect(publicKeys).to.have.property('e')
-    expect(publicKeys.e.length).to.be.least(1)
-    expect(publicKeys.n.length).to.be.least(1)
-    expect(Number(publicKeys.e)).not.to.be.eq(NaN)
+    expect(publicKey).to.have.property('n')
+    expect(publicKey).to.have.property('e')
+    expect(publicKey.e.length).to.be.least(1)
+    expect(publicKey.n.length).to.be.least(1)
+    expect(Number(publicKey.e)).not.to.be.eq(NaN)
   })
 
-  it('Create public keys with invalid e', () => {
+  it('FAIL: create public key with invalid e', () => {
     // Arrange
     let errorMessage = null
     // Act
     try {
-      const privateKeys = rsaOne.generateRSAPrivate(bits)
-      rsaTwo.createRSAPublic(privateKeys.n, undefined)
+      const privateKey = rsaOne.generateRSAPrivate(bits)
+      rsaTwo.createRSAPublic(privateKey.n, undefined)
     } catch (error) {
       errorMessage = error.message
     }
@@ -73,7 +73,7 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Create public keys with invalid n', () => {
+  it('FAIL: create public key with invalid n', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -87,22 +87,22 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Get private keys', () => {
+  it('OK: get private key', () => {
     // Act
     rsaOne.generateRSAPrivate(bits)
-    const keys = rsaOne.getRSAPrivate()
+    const key = rsaOne.getRSAPrivate()
     // Assert
-    expect(keys).to.have.property('n')
-    expect(keys).to.have.property('d')
-    expect(keys).to.have.property('e')
-    expect(keys.e.length).to.be.least(1)
-    expect(keys.n.length).to.be.least(1)
-    expect(keys.d.length).to.be.least(1)
-    expect(Number(keys.e)).not.to.be.eq(NaN)
-    expect(Number(keys.e)).to.be.eq(10001)
+    expect(key).to.have.property('n')
+    expect(key).to.have.property('d')
+    expect(key).to.have.property('e')
+    expect(key.e.length).to.be.least(1)
+    expect(key.n.length).to.be.least(1)
+    expect(key.d.length).to.be.least(1)
+    expect(Number(key.e)).not.to.be.eq(NaN)
+    expect(Number(key.e)).to.be.eq(10001)
   })
 
-  it('Get private keys with not created', () => {
+  it('FAIL: get private key with not created', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -115,20 +115,20 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('Get public keys', () => {
+  it('OK: get public key', () => {
     // Act
-    const privateKeys = rsaOne.generateRSAPrivate(bits)
-    rsaTwo.createRSAPublic(privateKeys.n, privateKeys.e)
-    const publicKeys = rsaTwo.getRSAPublic()
+    const privateKey = rsaOne.generateRSAPrivate(bits)
+    rsaTwo.createRSAPublic(privateKey.n, privateKey.e)
+    const publicKey = rsaTwo.getRSAPublic()
     // Assert
-    expect(publicKeys).to.have.property('n')
-    expect(publicKeys).to.have.property('e')
-    expect(publicKeys.e.length).to.be.least(1)
-    expect(publicKeys.n.length).to.be.least(1)
-    expect(Number(publicKeys.e)).not.to.be.eq(NaN)
+    expect(publicKey).to.have.property('n')
+    expect(publicKey).to.have.property('e')
+    expect(publicKey.e.length).to.be.least(1)
+    expect(publicKey.n.length).to.be.least(1)
+    expect(Number(publicKey.e)).not.to.be.eq(NaN)
   })
 
-  it('Get public keys with not created', () => {
+  it('FAIL: get public key with not created', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -141,7 +141,7 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('generate private keys from n, d, e and primes', () => {
+  it('OK: generate private key from n, d, e and primes', () => {
     // Act
     const { n, d, e, primes } = rsaOne.generateRSAPrivate(1024)
     const rsaFrom = rsaTwo.generateRSAPrivateFrom(n, d, e, primes)
@@ -157,7 +157,7 @@ describe('RSA generate keys', () => {
     expect(rsaFrom.d).to.be.equal(d)
   })
 
-  it('generate rsa from keys with invalid d', () => {
+  it('FAIL: generate rsa from key with invalid d', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -171,7 +171,7 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('generate rsa from keys with invalid n', () => {
+  it('FAIL: generate rsa from key with invalid n', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -185,7 +185,7 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('generate rsa from keys with invalid e', () => {
+  it('FAIL: generate rsa from key with invalid e', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -199,7 +199,7 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('generate rsa from keys with invalid primes', () => {
+  it('FAIL: generate rsa from key with invalid primes', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -213,13 +213,140 @@ describe('RSA generate keys', () => {
     expect(errorMessage).not.to.be.eq(null)
   })
 
-  it('generate rsa from keys with empty primes', () => {
+  it('FAIL: generate rsa from key with empty primes', () => {
     // Arrange
     let errorMessage = null
     // Act
     try {
       const { d, n, e } = rsaOne.generateRSAPrivate(1024)
       rsaTwo.generateRSAPrivateFrom(n, d, e, [])
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('OK: generate private rsa key from key and back', () => {
+    // Arrange
+    const privatePEM = `-----BEGIN PRIVATE KEY-----
+MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDD/UjzFPIp85KE
+Ga4rhPYY0/8MszqrNHcyoogVXyg5MTXCee6nQPOk88HLsDM2KW7JBtvc2LDbzPVm
+P6ZxqRsj03T3VrC4YOari460Jn9J6L4ueKvUagkxxF2XyaB7yuoblFmuTsZA98Zj
+wAgfPA4G2PaeaxtdzWWXV4ehmGoXslKFzNnMSBLu/a+GROrWTT/5vg1jybXrppeD
+cTeBBE+vbcv9k/Al7j6eIwCi0ObZYoEEET+3Et5hGv6w7qrH+Ds0MBhesSMmVLSm
+vkEMaJxUcWGnIQazgghFjnFvnQkF57zJsMl/sTjm7QkA9IIxejPGvfgARbP1aAAv
+UMtjpoULAgMBAAECggEABYwix3adUCCr0f9kFalCyfseKf7ct0HZ6d392hUCb3P8
+IJAQ+Dz3aIDZyGkpWewcTaZbDMo5X09S1t0QWgE+Wmo+0k1q3R0pCkv98w1v5uim
+kWwq+O0za2wydfxoBXj93V/6ldt28xnQTLx/vlqVzw3PFTbU5HfO21TH6wQEZL1D
+rhEshddoU9a9qrqzsVFNLUiGHAvMR7YijagLl0t2LMSfeIt5qS4Rj7fCyXGzNNSx
+01h31IfVSUT1FdWTf+fRAYF20nupqejzLjRc5srNoTrQnK7otDFYFxiwb/E2/Dte
+I6kIr5SgscOBoQizBPL/yINgWjWHYUrMRyX+EN2sqQKBgQDOtX4Zs4QDNFT7otjL
+D1JNIY6bcic0P86XMq6LNSV5o6JmxNDMlPD/EjVAicjOxn1LYbnzIQyuzOVrNXm0
++QA8dsJMyQzzNO7o6t9lLtrG+CXBKP7wmVBb8mMWve0VKNeLZyOpbOamGC1P7mPp
+JVoRh+8DAVzKPXlEaKXXLasZHwKBgQDyuWs8b/6wv1d8WGZoXYuCkL1l/ywNidZP
+AeBys4FXdqN6luOuCIoMpu7sOzCT7exu5pz3toB74bwVGRsSlcp3LJirb8LN4U3o
+jkD3Tp8Gn7f7pUE43ZphU8B25ebAMBgCC5V+77HVIlo8GmLFz0M5XAslWtZ6GMmr
+XF3HhERalQKBgEejfN15aqIVq/I94PaXC8XxgFP9PvsLthSOmxFhzOgYPvtw8JBG
+ejNcYxpH5lFLVzcd2m0ZoiSenFAIi3Kd7WgHHJWyBAvx527Pn7aYg3f7nlIQXDKU
+X9ZN7et+zUDNE86bYy+fr1wW+vU9wGCX8lwrCTm4aikpHvMHdZpamHavAoGADYSq
+JkmOg8WEV9aMjY94L6NkCQQ3LeHZX7kZCQpaT8a5wCAbOhwbpCy/7cQ2Jmb/3gVW
+BK3TZhLiaMJnMZfKGO0Q66tjzBeaQTN7BssILFRE6O0BPuuIp5cEhxqyyU1kaOjA
+QLuUyewJ3oMRsTaj5dPsgv4WJ+KtiK+yQWRqcikCgYAwRzXzsrGK2HpkER3sEXok
+hydDHbuqKLuT2Cqe6wyBpJPq5MyMu/T7ANmAPtJK4nvQF5RQoGdTne6/lvvwNMf2
+ullviEZz1ehunkmoU25CgAKLXXCMmw/T8GyX6UUIqofyFGHasj/vjA8ZIpdLyKVP
+khSri8NDQTao0i43teKIMA==
+-----END PRIVATE KEY-----
+`
+    // Act
+    const key = rsaOne.createRSAPrivateFromPEM(privatePEM)
+    const generatedPEM = rsaOne.privateKeyToPEM()
+    // Assert
+    expect(key).to.have.property('n')
+    expect(key).to.have.property('d')
+    expect(key).to.have.property('e')
+    expect(key.e.length).to.be.least(1)
+    expect(key.n.length).to.be.least(1)
+    expect(key.d.length).to.be.least(1)
+    expect(Number(key.e)).not.to.be.eq(NaN)
+    expect(Number(key.e)).to.be.eq(10001)
+    expect(generatedPEM).to.be.eq(privatePEM)
+  })
+
+  it('FAIL: generate private rsa key from pem with invalid pem', () => {
+    // Arrange
+    const invalidPEM = 'invalid_pem'
+    let errorMessage = null
+    // Act
+    try {
+      rsaOne.createRSAPrivateFromPEM(invalidPEM)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('FAIL: get private rsa key pem without key create', () => {
+    // Arrange
+    const invalidPEM = 'invalid_pem'
+    let errorMessage = null
+    // Act
+    try {
+      rsaOne.privateKeyToPEM(invalidPEM)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('OK: generate public rsa key from pem and back', () => {
+    // Arrange
+    const publicPEM = `-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw/1I8xTyKfOShBmuK4T2
+GNP/DLM6qzR3MqKIFV8oOTE1wnnup0DzpPPBy7AzNiluyQbb3Niw28z1Zj+mcakb
+I9N091awuGDmq4uOtCZ/Sei+Lnir1GoJMcRdl8mge8rqG5RZrk7GQPfGY8AIHzwO
+Btj2nmsbXc1ll1eHoZhqF7JShczZzEgS7v2vhkTq1k0/+b4NY8m166aXg3E3gQRP
+r23L/ZPwJe4+niMAotDm2WKBBBE/txLeYRr+sO6qx/g7NDAYXrEjJlS0pr5BDGic
+VHFhpyEGs4IIRY5xb50JBee8ybDJf7E45u0JAPSCMXozxr34AEWz9WgAL1DLY6aF
+CwIDAQAB
+-----END PUBLIC KEY-----
+`
+    // Act
+    const key = rsaTwo.createRSAPublicFromPEM(publicPEM)
+    const generatedPEM = rsaTwo.publicKeyToPEM()
+    // Assert
+    expect(key).to.have.property('n')
+    expect(key).to.have.property('e')
+    expect(key.e.length).to.be.least(1)
+    expect(key.n.length).to.be.least(1)
+    expect(Number(key.e)).not.to.be.eq(NaN)
+    expect(Number(key.e)).to.be.eq(10001)
+    expect(generatedPEM).to.be.eq(publicPEM)
+  })
+
+  it('FAIL: generate public rsa key from pem with invalid pem', () => {
+    // Arrange
+    const invalidPEM = 'invalid_pem'
+    let errorMessage = null
+    // Act
+    try {
+      rsaTwo.createRSAPublicFromPEM(invalidPEM)
+    } catch (error) {
+      errorMessage = error.message
+    }
+    // Assert
+    expect(errorMessage).not.to.be.eq(null)
+  })
+
+  it('FAIL: get public rsa key pem without key create', () => {
+    // Arrange
+    const invalidPEM = 'invalid_pem'
+    let errorMessage = null
+    // Act
+    try {
+      rsaTwo.publicKeyToPEM(invalidPEM)
     } catch (error) {
       errorMessage = error.message
     }
