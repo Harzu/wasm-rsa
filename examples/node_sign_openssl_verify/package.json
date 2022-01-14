@@ -1,0 +1,11 @@
+{
+  "name": "node_sign_python_verify",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Ilya Shvyryalkin <ilyashvy@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "wasm-rsa": "file:../.."
+  }
+}

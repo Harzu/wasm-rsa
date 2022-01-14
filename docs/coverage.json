@@ -1,11 +1,11 @@
 {
   "coverage": "100%",
-  "expectCount": 16,
-  "actualCount": 16,
+  "expectCount": 20,
+  "actualCount": 20,
   "files": {
     "src/Rsa.ts": {
-      "expectCount": 14,
-      "actualCount": 14,
+      "expectCount": 18,
+      "actualCount": 18,
       "undocumentLines": []
     },
     "src/index.browser.ts": {

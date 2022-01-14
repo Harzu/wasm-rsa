@@ -567,9 +567,9 @@
     "__docId__": 48,
     "kind": "file",
     "name": "src/Rsa.ts",
-    "content": "import {\n  RSAPublic,\n  RSAPrivate,\n  RSAInterface,\n  RSAPublicKeyInterface,\n  RSAPrivateKeyInterface,\n} from './interfaces'\nimport randomBytes from 'randombytes'\n\n/**\n * @desc facade on wasm code.\n * @access private\n * @example\n * import RSASetup from 'wasm-rsa'\n * const rsaInstance = await RSASetup()\n */\nexport default class RSA implements RSAInterface {\n  public static IS_BROWSER: boolean = (typeof window !== 'undefined')\n\n  private publicInstance: RSAPublicKeyInterface\n  private privateInstance: RSAPrivateKeyInterface\n  /** @ignore */\n  constructor(wasm) {\n    /** @ignore */\n    this.publicInstance = new wasm.RSAPublicKeyPair()\n    /** @ignore */\n    this.privateInstance = new wasm.RSAPrivateKeyPair()\n  }\n\n  /**\n   * @typedef {Object} RSAPrivate\n   * @property {string} n - public piece rsa key\n   * @property {string} e - public piece rsa key\n   * @property {string} d - private piece rsa key\n   * @property {Array} primes - array of big numbers which create key pair\n   */\n\n   /**\n    * @typedef {Object} RSAPublic\n    * @property {string} n - public piece rsa key\n    * @property {string} e - public piece rsa key\n    */\n\n  /**\n   * @desc Generate private key pair\n   * @param {number} bits - count bits for create rsa keys.\n   * @returns {RSAPrivate} - generated keys\n   * @example\n   * const { n, e, d, primes } = rsaInstance.generateRSAPrivate(2048)\n   */\n  generateRSAPrivate(bits: number): RSAPrivate {\n    if (typeof bits !== 'number') {\n      throw new Error(`Invalid bits ${bits}`)\n    }\n\n    const randomSeed = randomBytes(32).toString('hex')\n    this.privateInstance.generate(bits, randomSeed)\n\n    return {\n      d: this.privateInstance.get_d(),\n      n: this.privateInstance.get_n(),\n      e: this.privateInstance.get_e(),\n      primes: this.privateInstance.get_primes().split('_'),\n    }\n  }\n  /**\n   * @desc Generate private key pair from n, d, e, primes\n   * @param {string} n - public piece rsa key\n   * @param {string} e - public piece rsa key\n   * @param {string} d - private piece rsa key\n   * @param {Array} primes - array of big numbers which create key pair\n   * @returns {RSAPrivate} - generated keys\n   * @example\n   * const privateKeys = rsaInstance.generateRSAPrivateFrom(n, d, e, primes)\n   */\n  generateRSAPrivateFrom(n: string, d: string, e: string, primes: string[]): RSAPrivate {\n    if (!n || !d || !e || !primes) {\n      throw new Error('not all data for create keys')\n    }\n\n    if (primes.length === 0) {\n      throw new Error('primes empty')\n    }\n\n    this.privateInstance.generate_from(n, d, e, primes.join('_'))\n    \n    return {\n      primes,\n      d: this.privateInstance.get_d(),\n      n: this.privateInstance.get_n(),\n      e: this.privateInstance.get_e(),\n    }\n  }\n  /**\n   * @desc Generate public keys from n, e\n   * @param {string} n - public piece rsa key\n   * @param {string} e - public piece rsa key\n   * @returns {RSAPublic} - generated keys\n   * @example\n   * const publicKeys = rsaInstance.createRSAPublic(n, e)\n   */\n  createRSAPublic(n: string, e: string): RSAPublic {\n    if (!n || !e || n.length < 1 || e.length < 1) {\n      throw new Error(`Invalid params for create n: ${n} e: ${e}`)\n    }\n\n    this.publicInstance.create(n, e)\n\n    return {\n      n: this.publicInstance.get_n(),\n      e: this.publicInstance.get_e(),\n    }\n  }\n\n  /**\n   * @desc Get private key pair\n   * @returns {RSAPrivate} - private keys\n   * @example\n   * const { n, d, e, primes } = rsaInstance.getRSAPrivate()\n   */\n  getRSAPrivate(): RSAPrivate {\n    const d = this.privateInstance.get_d()\n    const n = this.privateInstance.get_n()\n    const e = this.privateInstance.get_e()\n    const primes = this.privateInstance.get_primes().split('_')\n\n    if (d.length < 1 || n.length < 1 || e.length < 1) {\n      throw new Error(`All rsa private keys not created d: ${d} n: ${n} e: ${e}`)\n    }\n\n    return { d, n, e, primes }\n  }\n\n  /**\n   * @desc Get private primes\n   * @returns {Array} - private primes\n   * @example\n   * const primes = rsaInstance.getPrivatePrimes()\n   */\n  getPrivatePrimes(): string[] {\n    const primes = this.privateInstance.get_primes()\n    return primes.split('_')\n  }\n\n  /**\n   * @desc Get public keys\n   * @returns {RSAPublic} - private keys\n   * @example\n   * const { n, e } = rsaInstance.getRSAPublic()\n   */\n  getRSAPublic(): RSAPublic {\n    const n = this.publicInstance.get_n()\n    const e = this.publicInstance.get_e()\n\n    if (n.length < 1 || e.length < 1) {\n      throw new Error(`All rsa public keys not created n: ${n} e: ${e}`)\n    }\n\n    return { n, e }\n  }\n\n  /**\n   * @desc sign message with private keys\n   * @param {string} message - message for sign\n   * @returns {string} - signature string\n   * @example\n   * const signature = rsaInstance.signMessage('hello')\n   *\n   * signature -> `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n   * 2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n   * 87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`\n   */\n  signMessage(message: string): string {\n    if (typeof message !== 'string') {\n      throw new Error('message should be a string')\n    }\n\n    return this.privateInstance.sign_message(message)\n  }\n\n  /**\n   * @desc verify signature with public keys\n   * @param {string} message - signature data\n   * @param {string} signature - signature\n   * @returns {boolean} - verify result\n   * @example\n   * const verify = rsaInstance.verify(\n   *  'hello',\n   *  `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n   *   2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n   *   87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`\n   * )\n   *\n   * verify -> true\n   */\n  verify(message: string, signature: string): boolean {\n    const verify = this.publicInstance.verify_message(message, signature)\n    \n    if (!verify) {\n      throw new Error('Verify message is false')\n    }\n\n    return verify\n  }\n\n  /**\n   * @desc encryption message with public keys\n   * @param {string} message - data for encrypt\n   * @returns {string} - encrypted data\n   * @example\n   * const encryptedMessage = rsaInstance.publicEncrypt('hello')\n   *\n   * encryptedMessage -> `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\n   * d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n   * 87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\n   * e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n   * 9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n   * 409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`\n   */\n  publicEncrypt(message: string): string {\n    if (!message) {\n      throw new Error('message is not define')\n    }\n\n    const randomSeed = randomBytes(32).toString('hex')\n    return this.publicInstance.encrypt(message, randomSeed)\n  }\n  /**\n   * @desc decrypt message with private keys\n   * @param {string} encryptedMessage - data for dencrypt\n   * @returns {string} - message\n   * @example\n   * const decryptMessage = rsaInstance.privateDecrypt(\n   *  `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\n   *   d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n   *   87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\n   *   e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n   *   9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n   *   409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`\n   * )\n   *\n   * decryptMessage -> 'hello'\n   */\n  privateDecrypt(encryptedMessage: string): string {\n    if (!encryptedMessage) {\n      throw new Error('message is not define')\n    }\n\n    return this.privateInstance.decrypt(encryptedMessage)\n  }\n}\n",
+    "content": "import {\n  RSAPublic,\n  RSAPrivate,\n  RSAInterface,\n  RSAPublicKeyInterface,\n  RSAPrivateKeyInterface,\n} from './interfaces'\nimport randomBytes from 'randombytes'\n\n/**\n * @desc facade on wasm code.\n * @access private\n * @example\n * import RSASetup from 'wasm-rsa'\n * const rsaInstance = await RSASetup()\n */\nexport default class RSA implements RSAInterface {\n  public static IS_BROWSER: boolean = (typeof window !== 'undefined')\n\n  private publicInstance: RSAPublicKeyInterface\n  private privateInstance: RSAPrivateKeyInterface\n  /** @ignore */\n  constructor(wasm) {\n    /** @ignore */\n    this.publicInstance = new wasm.RSAPublicKeyPair()\n    /** @ignore */\n    this.privateInstance = new wasm.RSAPrivateKeyPair()\n  }\n\n  /**\n   * @typedef {Object} RSAPrivate\n   * @property {string} n - public piece rsa key\n   * @property {string} e - public piece rsa key\n   * @property {string} d - private piece rsa key\n   * @property {Array} primes - array of big numbers which create key pair\n   */\n\n   /**\n    * @typedef {Object} RSAPublic\n    * @property {string} n - public piece rsa key\n    * @property {string} e - public piece rsa key\n    */\n\n  /**\n   * @desc Generate private key pair\n   * @param {number} bits - count bits for create rsa keys.\n   * @returns {RSAPrivate} - generated keys\n   * @example\n   * const { n, e, d, primes } = rsaInstance.generateRSAPrivate(2048)\n   */\n  generateRSAPrivate(bits: number): RSAPrivate {\n    if (typeof bits !== 'number') {\n      throw new Error(`Invalid bits ${bits}`)\n    }\n\n    const randomSeed = randomBytes(32).toString('hex')\n    this.privateInstance.generate(bits, randomSeed)\n\n    return {\n      d: this.privateInstance.get_d(),\n      n: this.privateInstance.get_n(),\n      e: this.privateInstance.get_e(),\n      primes: this.privateInstance.get_primes().split('_'),\n    }\n  }\n  /**\n   * @desc Generate private key pair from n, d, e, primes\n   * @param {string} n - public piece rsa key\n   * @param {string} d - private piece rsa key\n   * @param {string} e - public piece rsa key\n   * @param {Array} primes - array of big numbers which create key pair\n   * @returns {RSAPrivate} - generated keys\n   * @example\n   * const privateKeys = rsaInstance.generateRSAPrivateFrom(n, d, e, primes)\n   */\n  generateRSAPrivateFrom(n: string, d: string, e: string, primes: string[]): RSAPrivate {\n    if (!n || !d || !e || !primes) {\n      throw new Error('not all data for create keys')\n    }\n\n    if (primes.length === 0) {\n      throw new Error('primes empty')\n    }\n\n    this.privateInstance.generate_from(n, d, e, primes.join('_'))\n\n    return {\n      primes,\n      d: this.privateInstance.get_d(),\n      n: this.privateInstance.get_n(),\n      e: this.privateInstance.get_e(),\n    }\n  }\n\n    /**\n   * @desc Generate private key from pem key format\n   * @param {string} key - private key in PEM format\n   * @returns {RSAPublic} - generated keys\n   * @example\n   * const publicKey = rsaInstance.createRSAPrivateFromPEM(`-----BEGIN PRIVATE KEY-----\n   * MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDD/UjzFPIp85KE\n   * Ga4rhPYY0/8MszqrNHcyoogVXyg5MTXCee6nQPOk88HLsDM2KW7JBtvc2LDbzPVm\n   * P6ZxqRsj03T3VrC4YOari460Jn9J6L4ueKvUagkxxF2XyaB7yuoblFmuTsZA98Zj\n   * wAgfPA4G2PaeaxtdzWWXV4ehmGoXslKFzNnMSBLu/a+GROrWTT/5vg1jybXrppeD\n   * cTeBBE+vbcv9k/Al7j6eIwCi0ObZYoEEET+3Et5hGv6w7qrH+Ds0MBhesSMmVLSm\n   * vkEMaJxUcWGnIQazgghFjnFvnQkF57zJsMl/sTjm7QkA9IIxejPGvfgARbP1aAAv\n   * UMtjpoULAgMBAAECggEABYwix3adUCCr0f9kFalCyfseKf7ct0HZ6d392hUCb3P8\n   * IJAQ+Dz3aIDZyGkpWewcTaZbDMo5X09S1t0QWgE+Wmo+0k1q3R0pCkv98w1v5uim\n   * kWwq+O0za2wydfxoBXj93V/6ldt28xnQTLx/vlqVzw3PFTbU5HfO21TH6wQEZL1D\n   * rhEshddoU9a9qrqzsVFNLUiGHAvMR7YijagLl0t2LMSfeIt5qS4Rj7fCyXGzNNSx\n   * 01h31IfVSUT1FdWTf+fRAYF20nupqejzLjRc5srNoTrQnK7otDFYFxiwb/E2/Dte\n   * I6kIr5SgscOBoQizBPL/yINgWjWHYUrMRyX+EN2sqQKBgQDOtX4Zs4QDNFT7otjL\n   * D1JNIY6bcic0P86XMq6LNSV5o6JmxNDMlPD/EjVAicjOxn1LYbnzIQyuzOVrNXm0\n   * +QA8dsJMyQzzNO7o6t9lLtrG+CXBKP7wmVBb8mMWve0VKNeLZyOpbOamGC1P7mPp\n   * JVoRh+8DAVzKPXlEaKXXLasZHwKBgQDyuWs8b/6wv1d8WGZoXYuCkL1l/ywNidZP\n   * AeBys4FXdqN6luOuCIoMpu7sOzCT7exu5pz3toB74bwVGRsSlcp3LJirb8LN4U3o\n   * jkD3Tp8Gn7f7pUE43ZphU8B25ebAMBgCC5V+77HVIlo8GmLFz0M5XAslWtZ6GMmr\n   * XF3HhERalQKBgEejfN15aqIVq/I94PaXC8XxgFP9PvsLthSOmxFhzOgYPvtw8JBG\n   * ejNcYxpH5lFLVzcd2m0ZoiSenFAIi3Kd7WgHHJWyBAvx527Pn7aYg3f7nlIQXDKU\n   * X9ZN7et+zUDNE86bYy+fr1wW+vU9wGCX8lwrCTm4aikpHvMHdZpamHavAoGADYSq\n   * JkmOg8WEV9aMjY94L6NkCQQ3LeHZX7kZCQpaT8a5wCAbOhwbpCy/7cQ2Jmb/3gVW\n   * BK3TZhLiaMJnMZfKGO0Q66tjzBeaQTN7BssILFRE6O0BPuuIp5cEhxqyyU1kaOjA\n   * QLuUyewJ3oMRsTaj5dPsgv4WJ+KtiK+yQWRqcikCgYAwRzXzsrGK2HpkER3sEXok\n   * hydDHbuqKLuT2Cqe6wyBpJPq5MyMu/T7ANmAPtJK4nvQF5RQoGdTne6/lvvwNMf2\n   * ullviEZz1ehunkmoU25CgAKLXXCMmw/T8GyX6UUIqofyFGHasj/vjA8ZIpdLyKVP\n   * khSri8NDQTao0i43teKIMA==\n   * -----END PRIVATE KEY-----`)\n   */\n  createRSAPrivateFromPEM(key: string): RSAPrivate {\n    if (!key) {\n      throw new Error(\"empty key\")\n    }\n\n    this.privateInstance.from_pkcs8_pem(key);\n\n    return {\n      d: this.privateInstance.get_d(),\n      n: this.privateInstance.get_n(),\n      e: this.privateInstance.get_e(),\n      primes: this.privateInstance.get_primes().split('_'),\n    }\n  }\n\n  /**\n   * @desc Generate public keys from n, e\n   * @param {string} n - public piece rsa key\n   * @param {string} e - public piece rsa key\n   * @returns {RSAPublic} - generated keys\n   * @example\n   * const publicKeys = rsaInstance.createRSAPublic(n, e)\n   */\n  createRSAPublic(n: string, e: string): RSAPublic {\n    if (!n || !e || n.length < 1 || e.length < 1) {\n      throw new Error(`Invalid params for create n: ${n} e: ${e}`)\n    }\n\n    this.publicInstance.create(n, e)\n\n    return {\n      n: this.publicInstance.get_n(),\n      e: this.publicInstance.get_e(),\n    }\n  }\n\n  /**\n   * @desc Create public key from pem key format\n   * @param {string} key - public key in PEM format\n   * @returns {RSAPublic} - generated keys\n   * @example\n   * const publicKey = rsaInstance.createRSAPublicFromPEM(`-----BEGIN PUBLIC KEY-----\n   * MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw/1I8xTyKfOShBmuK4T2\n   * GNP/DLM6qzR3MqKIFV8oOTE1wnnup0DzpPPBy7AzNiluyQbb3Niw28z1Zj+mcakb\n   * I9N091awuGDmq4uOtCZ/Sei+Lnir1GoJMcRdl8mge8rqG5RZrk7GQPfGY8AIHzwO\n   * Btj2nmsbXc1ll1eHoZhqF7JShczZzEgS7v2vhkTq1k0/+b4NY8m166aXg3E3gQRP\n   * r23L/ZPwJe4+niMAotDm2WKBBBE/txLeYRr+sO6qx/g7NDAYXrEjJlS0pr5BDGic\n   * VHFhpyEGs4IIRY5xb50JBee8ybDJf7E45u0JAPSCMXozxr34AEWz9WgAL1DLY6aF\n   * CwIDAQAB\n   * -----END PUBLIC KEY-----`)\n   */\n   createRSAPublicFromPEM(key: string): RSAPublic {\n    if (!key) {\n      throw new Error(\"empty key\")\n    }\n\n    this.publicInstance.from_pkcs8_pem(key);\n\n    return {\n      n: this.publicInstance.get_n(),\n      e: this.publicInstance.get_e(),\n    }\n  }\n\n  /**\n   * @desc Get private key pair\n   * @returns {RSAPrivate} - private keys\n   * @example\n   * const { n, d, e, primes } = rsaInstance.getRSAPrivate()\n   */\n  getRSAPrivate(): RSAPrivate {\n    const d = this.privateInstance.get_d()\n    const n = this.privateInstance.get_n()\n    const e = this.privateInstance.get_e()\n    const primes = this.privateInstance.get_primes().split('_')\n\n    if (d.length < 1 || n.length < 1 || e.length < 1) {\n      throw new Error(`All rsa private keys not created d: ${d} n: ${n} e: ${e}`)\n    }\n\n    return { d, n, e, primes }\n  }\n\n  /**\n   * @desc Get private primes\n   * @returns {Array} - private primes\n   * @example\n   * const primes = rsaInstance.getPrivatePrimes()\n   */\n  getPrivatePrimes(): string[] {\n    const primes = this.privateInstance.get_primes()\n    return primes.split('_')\n  }\n\n  /**\n   * @desc Get public keys\n   * @returns {RSAPublic} - private keys\n   * @example\n   * const { n, e } = rsaInstance.getRSAPublic()\n   */\n  getRSAPublic(): RSAPublic {\n    const n = this.publicInstance.get_n()\n    const e = this.publicInstance.get_e()\n\n    if (n.length < 1 || e.length < 1) {\n      throw new Error(`All rsa public keys not created n: ${n} e: ${e}`)\n    }\n\n    return { n, e }\n  }\n\n  /**\n   * @desc sign message with private keys\n   * @param {string} message - message for sign\n   * @returns {string} - signature string\n   * @example\n   * const signature = rsaInstance.signMessage('hello')\n   *\n   * signature -> `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n   * 2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n   * 87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`\n   */\n  signMessage(message: string): string {\n    if (typeof message !== 'string') {\n      throw new Error('message should be a string')\n    }\n\n    return this.privateInstance.sign_message(message)\n  }\n\n  /**\n   * @desc verify signature with public keys\n   * @param {string} message - signature data\n   * @param {string} signature - signature\n   * @returns {boolean} - verify result\n   * @example\n   * const verify = rsaInstance.verify(\n   *  'hello',\n   *  `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n   *   2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n   *   87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`\n   * )\n   *\n   * verify -> true\n   */\n  verify(message: string, signature: string): boolean {\n    const verify = this.publicInstance.verify_message(message, signature)\n\n    if (!verify) {\n      throw new Error('Verify message is false')\n    }\n\n    return verify\n  }\n\n  /**\n   * @desc encryption message with public keys\n   * @param {string} message - data for encrypt\n   * @returns {string} - encrypted data\n   * @example\n   * const encryptedMessage = rsaInstance.publicEncrypt('hello')\n   *\n   * encryptedMessage -> `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\n   * d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n   * 87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\n   * e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n   * 9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n   * 409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`\n   */\n  publicEncrypt(message: string): string {\n    if (!message) {\n      throw new Error('message is not define')\n    }\n\n    const randomSeed = randomBytes(32).toString('hex')\n    return this.publicInstance.encrypt(message, randomSeed)\n  }\n\n  /**\n   * @desc decrypt message with private keys\n   * @param {string} encryptedMessage - data for dencrypt\n   * @returns {string} - message\n   * @example\n   * const decryptMessage = rsaInstance.privateDecrypt(\n   *  `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\n   *   d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n   *   87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\n   *   e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n   *   9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n   *   409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`\n   * )\n   *\n   * decryptMessage -> 'hello'\n   */\n  privateDecrypt(encryptedMessage: string): string {\n    if (!encryptedMessage) {\n      throw new Error('message is not define')\n    }\n\n    return this.privateInstance.decrypt(encryptedMessage)\n  }\n\n  /**\n   * @desc generate private key in PEM format\n   * @returns {string} - key\n   * @example\n   * const privatePEM = rsaInstance.privateKeyToPEM()\n   * console.log(privatePEM)\n   * -----BEGIN RSA PRIVATE KEY-----\n   * MIICXAIBAAKBgQCtelj+ptZ69rtp4unsbbRFygYpaZc0/GgRkJSwav891WjZk/dp\n   * /J71s4cjJuKgbnN7wKt2ECoeBEzr/BAWc/y9dh1dLdSoHnl2LPVLindFRC3o7UZu\n   * mogz4X1bxlb6lEh2TV04nrt9615e1+RS9zIBP0HGr2ZG4qhd58SH1NGSZQIDAQAB\n   * AoGAAR1JFxGxTQbqu0pm4ErwHoamtXtlKkT40iwQmHWHgDkvvD4UF800pDVsB9DH\n   * IeqzuTbKoy6FZr32VInA/LPwCrDSmeD2HNuGiwIjTvBl1QOnwG8KzfFSXHV3ZVn7\n   * 4Gb4QEOdB8osPhi7uU+a6lksSudNLKoLUIX0YqD1aWQtMAECQQDdQXmfeJyeHRdI\n   * nOAyseTLCzBoHJONoAVtbeyLt2colG7BzyDDxKanj9LsMtkdtLOVymHmvVUJHv2I\n   * Lex1jSZlAkEAyLgxp+dninReelj7Bwk7FY2wIeb5/E3dE3brC6mtqVRrWh8tn1pm\n   * yRWqH9mjJRv29DZZtJs41LpGoAUQX4X8AQJACobI8IteeC9OIkhEamUIS5i2rt1d\n   * L8nDOFeYf3U0VTvqoRHnryi1/RbcpBwvNDiaqq+8RKwRVaPB0C7PJzCV+QJAMBZY\n   * 5yX8W2JXxC4PLfdbLWW9ndGtcHHjFie2Vhv3nAq6kWPI1VWeLGzBTlIg0OIrPwTK\n   * ZweNDQH3q5yq+IesAQJBANcdJLlwriLwzXnDeDbki/M/TUssiVGtCWLnrxwT1Yi8\n   * IAxrYAWdS9Qb/EaZamqyMKizp9kyMSpPwWHhFSJtT58=\n   * -----END RSA PRIVATE KEY-----\n   */\n  privateKeyToPEM(): string {\n      return this.privateInstance.to_pkcs8_pem()\n  }\n\n  /**\n   * @desc generate public key in PEM format\n   * @returns {string} - key\n   * @example\n   * const publicPEM = rsaInstance.publicKeyToPEM()\n   * console.log(publicPEM)\n   * -----BEGIN RSA PUBLIC KEY-----\n   * MIGJAoGBAK16WP6m1nr2u2ni6exttEXKBilplzT8aBGQlLBq/z3VaNmT92n8nvWz\n   * hyMm4qBuc3vAq3YQKh4ETOv8EBZz/L12HV0t1KgeeXYs9UuKd0VELejtRm6aiDPh\n   * fVvGVvqUSHZNXTieu33rXl7X5FL3MgE/QcavZkbiqF3nxIfU0ZJlAgMBAAE=\n   * -----END RSA PUBLIC KEY-----\n   */\n  publicKeyToPEM(): string {\n    return this.publicInstance.to_pkcs8_pem()\n  }\n}\n",
     "static": true,
-    "longname": "/home/fanyshu/Projects/libs/wasm-rsa/src/Rsa.ts",
+    "longname": "/home/fanyshu/projects/main/wasm-rsa/src/Rsa.ts",
     "access": "public",
     "description": null,
     "lineNumber": 1
@@ -819,8 +819,8 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "e",
-        "description": "public piece rsa key"
+        "name": "d",
+        "description": "private piece rsa key"
       },
       {
         "nullable": null,
@@ -829,8 +829,8 @@
         ],
         "spread": false,
         "optional": false,
-        "name": "d",
-        "description": "private piece rsa key"
+        "name": "e",
+        "description": "public piece rsa key"
       },
       {
         "nullable": null,
@@ -855,6 +855,48 @@
   {
     "__docId__": 57,
     "kind": "method",
+    "name": "createRSAPrivateFromPEM",
+    "memberof": "src/Rsa.ts~RSA",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Rsa.ts~RSA#createRSAPrivateFromPEM",
+    "access": "public",
+    "description": "Generate private key from pem key format",
+    "examples": [
+      "const publicKey = rsaInstance.createRSAPrivateFromPEM(`-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDD/UjzFPIp85KE\nGa4rhPYY0/8MszqrNHcyoogVXyg5MTXCee6nQPOk88HLsDM2KW7JBtvc2LDbzPVm\nP6ZxqRsj03T3VrC4YOari460Jn9J6L4ueKvUagkxxF2XyaB7yuoblFmuTsZA98Zj\nwAgfPA4G2PaeaxtdzWWXV4ehmGoXslKFzNnMSBLu/a+GROrWTT/5vg1jybXrppeD\ncTeBBE+vbcv9k/Al7j6eIwCi0ObZYoEEET+3Et5hGv6w7qrH+Ds0MBhesSMmVLSm\nvkEMaJxUcWGnIQazgghFjnFvnQkF57zJsMl/sTjm7QkA9IIxejPGvfgARbP1aAAv\nUMtjpoULAgMBAAECggEABYwix3adUCCr0f9kFalCyfseKf7ct0HZ6d392hUCb3P8\nIJAQ+Dz3aIDZyGkpWewcTaZbDMo5X09S1t0QWgE+Wmo+0k1q3R0pCkv98w1v5uim\nkWwq+O0za2wydfxoBXj93V/6ldt28xnQTLx/vlqVzw3PFTbU5HfO21TH6wQEZL1D\nrhEshddoU9a9qrqzsVFNLUiGHAvMR7YijagLl0t2LMSfeIt5qS4Rj7fCyXGzNNSx\n01h31IfVSUT1FdWTf+fRAYF20nupqejzLjRc5srNoTrQnK7otDFYFxiwb/E2/Dte\nI6kIr5SgscOBoQizBPL/yINgWjWHYUrMRyX+EN2sqQKBgQDOtX4Zs4QDNFT7otjL\nD1JNIY6bcic0P86XMq6LNSV5o6JmxNDMlPD/EjVAicjOxn1LYbnzIQyuzOVrNXm0\n+QA8dsJMyQzzNO7o6t9lLtrG+CXBKP7wmVBb8mMWve0VKNeLZyOpbOamGC1P7mPp\nJVoRh+8DAVzKPXlEaKXXLasZHwKBgQDyuWs8b/6wv1d8WGZoXYuCkL1l/ywNidZP\nAeBys4FXdqN6luOuCIoMpu7sOzCT7exu5pz3toB74bwVGRsSlcp3LJirb8LN4U3o\njkD3Tp8Gn7f7pUE43ZphU8B25ebAMBgCC5V+77HVIlo8GmLFz0M5XAslWtZ6GMmr\nXF3HhERalQKBgEejfN15aqIVq/I94PaXC8XxgFP9PvsLthSOmxFhzOgYPvtw8JBG\nejNcYxpH5lFLVzcd2m0ZoiSenFAIi3Kd7WgHHJWyBAvx527Pn7aYg3f7nlIQXDKU\nX9ZN7et+zUDNE86bYy+fr1wW+vU9wGCX8lwrCTm4aikpHvMHdZpamHavAoGADYSq\nJkmOg8WEV9aMjY94L6NkCQQ3LeHZX7kZCQpaT8a5wCAbOhwbpCy/7cQ2Jmb/3gVW\nBK3TZhLiaMJnMZfKGO0Q66tjzBeaQTN7BssILFRE6O0BPuuIp5cEhxqyyU1kaOjA\nQLuUyewJ3oMRsTaj5dPsgv4WJ+KtiK+yQWRqcikCgYAwRzXzsrGK2HpkER3sEXok\nhydDHbuqKLuT2Cqe6wyBpJPq5MyMu/T7ANmAPtJK4nvQF5RQoGdTne6/lvvwNMf2\nullviEZz1ehunkmoU25CgAKLXXCMmw/T8GyX6UUIqofyFGHasj/vjA8ZIpdLyKVP\nkhSri8NDQTao0i43teKIMA==\n-----END PRIVATE KEY-----`)"
+    ],
+    "lineNumber": 150,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{RSAPublic} - generated keys"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "private key in PEM format"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "RSAPublic"
+      ],
+      "spread": false,
+      "description": "generated keys"
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "method",
     "name": "createRSAPublic",
     "memberof": "src/Rsa.ts~RSA",
     "generator": false,
@@ -866,7 +908,7 @@
     "examples": [
       "const publicKeys = rsaInstance.createRSAPublic(n, e)"
     ],
-    "lineNumber": 126,
+    "lineNumber": 182,
     "unknown": [
       {
         "tagName": "@returns",
@@ -905,7 +947,49 @@
     }
   },
   {
-    "__docId__": 58,
+    "__docId__": 59,
+    "kind": "method",
+    "name": "createRSAPublicFromPEM",
+    "memberof": "src/Rsa.ts~RSA",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Rsa.ts~RSA#createRSAPublicFromPEM",
+    "access": "public",
+    "description": "Create public key from pem key format",
+    "examples": [
+      "const publicKey = rsaInstance.createRSAPublicFromPEM(`-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAw/1I8xTyKfOShBmuK4T2\nGNP/DLM6qzR3MqKIFV8oOTE1wnnup0DzpPPBy7AzNiluyQbb3Niw28z1Zj+mcakb\nI9N091awuGDmq4uOtCZ/Sei+Lnir1GoJMcRdl8mge8rqG5RZrk7GQPfGY8AIHzwO\nBtj2nmsbXc1ll1eHoZhqF7JShczZzEgS7v2vhkTq1k0/+b4NY8m166aXg3E3gQRP\nr23L/ZPwJe4+niMAotDm2WKBBBE/txLeYRr+sO6qx/g7NDAYXrEjJlS0pr5BDGic\nVHFhpyEGs4IIRY5xb50JBee8ybDJf7E45u0JAPSCMXozxr34AEWz9WgAL1DLY6aF\nCwIDAQAB\n-----END PUBLIC KEY-----`)"
+    ],
+    "lineNumber": 217,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{RSAPublic} - generated keys"
+      }
+    ],
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "key",
+        "description": "public key in PEM format"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "RSAPublic"
+      ],
+      "spread": false,
+      "description": "generated keys"
+    }
+  },
+  {
+    "__docId__": 60,
     "kind": "method",
     "name": "getRSAPrivate",
     "memberof": "src/Rsa.ts~RSA",
@@ -918,7 +1002,7 @@
     "examples": [
       "const { n, d, e, primes } = rsaInstance.getRSAPrivate()"
     ],
-    "lineNumber": 150,
+    "lineNumber": 241,
     "unknown": [
       {
         "tagName": "@returns",
@@ -936,7 +1020,7 @@
     "params": []
   },
   {
-    "__docId__": 59,
+    "__docId__": 61,
     "kind": "method",
     "name": "getPrivatePrimes",
     "memberof": "src/Rsa.ts~RSA",
@@ -949,7 +1033,7 @@
     "examples": [
       "const primes = rsaInstance.getPrivatePrimes()"
     ],
-    "lineNumber": 172,
+    "lineNumber": 263,
     "unknown": [
       {
         "tagName": "@returns",
@@ -967,7 +1051,7 @@
     "params": []
   },
   {
-    "__docId__": 60,
+    "__docId__": 62,
     "kind": "method",
     "name": "getRSAPublic",
     "memberof": "src/Rsa.ts~RSA",
@@ -980,7 +1064,7 @@
     "examples": [
       "const { n, e } = rsaInstance.getRSAPublic()"
     ],
-    "lineNumber": 190,
+    "lineNumber": 281,
     "unknown": [
       {
         "tagName": "@returns",
@@ -998,7 +1082,7 @@
     "params": []
   },
   {
-    "__docId__": 61,
+    "__docId__": 63,
     "kind": "method",
     "name": "signMessage",
     "memberof": "src/Rsa.ts~RSA",
@@ -1011,7 +1095,7 @@
     "examples": [
       "const signature = rsaInstance.signMessage('hello')\n\nsignature -> `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`"
     ],
-    "lineNumber": 219,
+    "lineNumber": 310,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1040,7 +1124,7 @@
     }
   },
   {
-    "__docId__": 62,
+    "__docId__": 64,
     "kind": "method",
     "name": "verify",
     "memberof": "src/Rsa.ts~RSA",
@@ -1053,7 +1137,7 @@
     "examples": [
       "const verify = rsaInstance.verify(\n 'hello',\n `5d21446e76ff38fe4688c1e7fd75c785d98cd7c5fabfd483c3cd27898d8e2931b176609bb5d28e5d6319c3e814ebcd96ae58\n  2ab3984b5309678d421672635b3fd643e840a1efa2e9cba7d27afaeb8534ca6338bf73aa10864f3406f1c484a85012d1c1a9\n  87398f28b75d8b79c521d548a944a4eaa1bfe56c0b715b43dede3d41`\n)\n\nverify -> true"
     ],
-    "lineNumber": 252,
+    "lineNumber": 343,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1092,7 +1176,7 @@
     }
   },
   {
-    "__docId__": 63,
+    "__docId__": 65,
     "kind": "method",
     "name": "publicEncrypt",
     "memberof": "src/Rsa.ts~RSA",
@@ -1105,7 +1189,7 @@
     "examples": [
       "const encryptedMessage = rsaInstance.publicEncrypt('hello')\n\nencryptedMessage -> `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\nd4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\ne3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`"
     ],
-    "lineNumber": 283,
+    "lineNumber": 374,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1134,7 +1218,7 @@
     }
   },
   {
-    "__docId__": 64,
+    "__docId__": 66,
     "kind": "method",
     "name": "privateDecrypt",
     "memberof": "src/Rsa.ts~RSA",
@@ -1147,7 +1231,7 @@
     "examples": [
       "const decryptMessage = rsaInstance.privateDecrypt(\n `ca6e7d0571563b46b82a873c196e53d7322f2d5f510a5185d4a94b0ecbfea966160\n  d4b0be160684a5b9b0c2b6d429d331a950210e5545ee133793f604f417f93c63af4509db79f90a89d0c87c7c\n  87dc6873a89575b0c985f8cc159bae781f88607c4ed8d2a6df4aac33c0ca91581debe50b7fef2fc76e71ad7c\n  e3c0191d7c1497199c2a317bd475a27988d71bfa5a33d23d1be19791a9bded0292836b0d10e5e4d7fa1bd092\n  9f5cabdb6082f2882c12dadebe23b3682e625618cd5a57d9727eb06192ab4703277128771d193aa69ea30123\n  409c7205827375c34d4c22544d09c1c128d8edd9124d62aa062f6642bd7e3e468888e1a78c7e80206361ef131ecee`\n)\n\ndecryptMessage -> 'hello'"
     ],
-    "lineNumber": 316,
+    "lineNumber": 407,
     "unknown": [
       {
         "tagName": "@returns",
@@ -1176,18 +1260,80 @@
     }
   },
   {
-    "__docId__": 65,
+    "__docId__": 67,
+    "kind": "method",
+    "name": "privateKeyToPEM",
+    "memberof": "src/Rsa.ts~RSA",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Rsa.ts~RSA#privateKeyToPEM",
+    "access": "public",
+    "description": "generate private key in PEM format",
+    "examples": [
+      "const privatePEM = rsaInstance.privateKeyToPEM()\nconsole.log(privatePEM)\n-----BEGIN RSA PRIVATE KEY-----\nMIICXAIBAAKBgQCtelj+ptZ69rtp4unsbbRFygYpaZc0/GgRkJSwav891WjZk/dp\n/J71s4cjJuKgbnN7wKt2ECoeBEzr/BAWc/y9dh1dLdSoHnl2LPVLindFRC3o7UZu\nmogz4X1bxlb6lEh2TV04nrt9615e1+RS9zIBP0HGr2ZG4qhd58SH1NGSZQIDAQAB\nAoGAAR1JFxGxTQbqu0pm4ErwHoamtXtlKkT40iwQmHWHgDkvvD4UF800pDVsB9DH\nIeqzuTbKoy6FZr32VInA/LPwCrDSmeD2HNuGiwIjTvBl1QOnwG8KzfFSXHV3ZVn7\n4Gb4QEOdB8osPhi7uU+a6lksSudNLKoLUIX0YqD1aWQtMAECQQDdQXmfeJyeHRdI\nnOAyseTLCzBoHJONoAVtbeyLt2colG7BzyDDxKanj9LsMtkdtLOVymHmvVUJHv2I\nLex1jSZlAkEAyLgxp+dninReelj7Bwk7FY2wIeb5/E3dE3brC6mtqVRrWh8tn1pm\nyRWqH9mjJRv29DZZtJs41LpGoAUQX4X8AQJACobI8IteeC9OIkhEamUIS5i2rt1d\nL8nDOFeYf3U0VTvqoRHnryi1/RbcpBwvNDiaqq+8RKwRVaPB0C7PJzCV+QJAMBZY\n5yX8W2JXxC4PLfdbLWW9ndGtcHHjFie2Vhv3nAq6kWPI1VWeLGzBTlIg0OIrPwTK\nZweNDQH3q5yq+IesAQJBANcdJLlwriLwzXnDeDbki/M/TUssiVGtCWLnrxwT1Yi8\nIAxrYAWdS9Qb/EaZamqyMKizp9kyMSpPwWHhFSJtT58=\n-----END RSA PRIVATE KEY-----"
+    ],
+    "lineNumber": 443,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} - key"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "key"
+    },
+    "params": []
+  },
+  {
+    "__docId__": 68,
+    "kind": "method",
+    "name": "publicKeyToPEM",
+    "memberof": "src/Rsa.ts~RSA",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Rsa.ts~RSA#publicKeyToPEM",
+    "access": "public",
+    "description": "generate public key in PEM format",
+    "examples": [
+      "const publicPEM = rsaInstance.publicKeyToPEM()\nconsole.log(publicPEM)\n-----BEGIN RSA PUBLIC KEY-----\nMIGJAoGBAK16WP6m1nr2u2ni6exttEXKBilplzT8aBGQlLBq/z3VaNmT92n8nvWz\nhyMm4qBuc3vAq3YQKh4ETOv8EBZz/L12HV0t1KgeeXYs9UuKd0VELejtRm6aiDPh\nfVvGVvqUSHZNXTieu33rXl7X5FL3MgE/QcavZkbiqF3nxIfU0ZJlAgMBAAE=\n-----END RSA PUBLIC KEY-----"
+    ],
+    "lineNumber": 466,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{string} - key"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "string"
+      ],
+      "spread": false,
+      "description": "key"
+    },
+    "params": []
+  },
+  {
+    "__docId__": 69,
     "kind": "file",
     "name": "src/index.browser.ts",
     "content": "import RSA from './Rsa'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in browser\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default async function RSASetup(): Promise<RSAInterface> {\n  const wasm = await import('../wasm/browser/rsa_lib').then((instance) => instance)\n  return new RSA(wasm)\n}\n\nexport { RSAInterface }\n",
     "static": true,
-    "longname": "/home/fanyshu/Projects/libs/wasm-rsa/src/index.browser.ts",
+    "longname": "/home/fanyshu/projects/main/wasm-rsa/src/index.browser.ts",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 66,
+    "__docId__": 70,
     "kind": "function",
     "name": "RSASetup",
     "memberof": "src/index.browser.ts",
@@ -1212,18 +1358,18 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 71,
     "kind": "file",
     "name": "src/index.node.ts",
     "content": "import RSA from './Rsa'\nimport * as wasm from '../wasm/nodejs/rsa_lib'\nimport { RSAInterface } from './interfaces'\n\n/**\n * @desc function for init rsa instance in node\n * @example\n * // Promise syntax\n * RSASetup().then(rsaInstance => {\n *    // code...\n * })\n *\n * // Async/Await syntax\n * const rsaInstance = await RSASetup()\n */\nexport default function RSASetup(): Promise<RSAInterface> {\n  return new Promise((resolve) => resolve(new RSA(wasm)))\n}\n\nexport { RSAInterface }\n",
     "static": true,
-    "longname": "/home/fanyshu/Projects/libs/wasm-rsa/src/index.node.ts",
+    "longname": "/home/fanyshu/projects/main/wasm-rsa/src/index.node.ts",
     "access": "public",
     "description": null,
     "lineNumber": 1
   },
   {
-    "__docId__": 68,
+    "__docId__": 72,
     "kind": "function",
     "name": "RSASetup",
     "memberof": "src/index.node.ts",
@@ -1249,8 +1395,8 @@
   },
   {
     "kind": "index",
-    "content": "# WASM RSA\n[![npm downloads](https://img.shields.io/npm/dt/wasm-rsa.svg)](https://www.npmjs.com/package/wasm-rsa)\n[![npm](https://img.shields.io/npm/v/wasm-rsa.svg?maxAge=2592000)](https://www.npmjs.com/package/wasm-rsa)\n[![Build Status](https://travis-ci.com/Harzu/wasm-rsa.svg?branch=master)](https://travis-ci.com/Harzu/wasm-rsa)\n\nWebAssembly rsa library for generate keys and sign/verify message in nodejs and browsers\n\n## Install\n```shell\nnpm i wasm-rsa\n```\n\n## Examples\n\nwebpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master/examples/webpack_four)\n\n## Docs - [Click here](https://harzu.github.io/wasm-rsa/)\n\n## Usage\n```javascript\nimport RSASetup from 'wasm-rsa'\n\n// Promise syntax\nRSASetup().then(rsaInstance => {\n  // code...\n})\n\n// Async/Await syntax\nconst rsaInstance = await RSASetup()\n// code...\n```\n\n## TypeScript\n\nfor typescript can import interface\n```javascript\nimport RSASetup, { RSAInterface } from 'wasm-rsa'\n```\n\n## For developers\n\ninstall rust\n```shell\ncurl https://sh.rustup.rs -sSf | sh\nrustup target add wasm32-unknown-unknown\ncargo check --target wasm32-unknown-unknown\n```\n\ninstall wasm-pack cli\n```shell\ncurl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh;\n```\n\nclone repo\n```shell\ngit clone https://github.com/Harzu/wasm-rsa.git\n```\n\nbuild\n```shell\nnpm run build\n```\n\nRun test\n```shell\nnpm run test\n```\n",
-    "longname": "/home/fanyshu/Projects/libs/wasm-rsa/README.md",
+    "content": "# WASM RSA\n[![npm downloads](https://img.shields.io/npm/dt/wasm-rsa.svg)](https://www.npmjs.com/package/wasm-rsa)\n[![npm](https://img.shields.io/npm/v/wasm-rsa.svg?maxAge=2592000)](https://www.npmjs.com/package/wasm-rsa)\n\nWebAssembly rsa library for generate keys and sign/verify message in nodejs and browsers\n\n## Install\n```shell\nnpm i wasm-rsa\n```\n\n## Examples\n\nwebpack 4 example - [webpack_four](https://github.com/Harzu/wasm-rsa/tree/master/examples/webpack_four)\n\n## Docs - [Click here](https://harzu.github.io/wasm-rsa/)\n\n## Usage\n```javascript\nimport RSASetup from 'wasm-rsa'\n\n// Promise syntax\nRSASetup().then(rsaInstance => {\n  // code...\n})\n\n// Async/Await syntax\nconst rsaInstance = await RSASetup()\n// code...\n```\n\n## TypeScript\n\nfor typescript can import interface\n```javascript\nimport RSASetup, { RSAInterface } from 'wasm-rsa'\n```\n\n## For developers\n\ninstall rust\n```shell\ncurl https://sh.rustup.rs -sSf | sh\nrustup target add wasm32-unknown-unknown\ncargo check --target wasm32-unknown-unknown\n```\n\ninstall wasm-pack cli\n```shell\ncurl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh;\n```\n\nclone repo\n```shell\ngit clone https://github.com/Harzu/wasm-rsa.git\n```\n\nbuild\n```shell\nnpm run build\n```\n\nRun test\n```shell\nnpm run test\n```\n",
+    "longname": "/home/fanyshu/projects/main/wasm-rsa/README.md",
     "name": "./README.md",
     "static": true,
     "access": "public"
@@ -1258,7 +1404,7 @@
   {
     "kind": "packageJSON",
     "content": "{\n  \"name\": \"wasm-rsa\",\n  \"version\": \"0.3.3\",\n  \"author\": \"Ilya Shvyryalkin <ilyashvy@gmail.com>\",\n  \"license\": \"MIT\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/Harzu/wasm-rsa.git\"\n  },\n  \"keywords\": [\n    \"rsa\",\n    \"wasm\",\n    \"rust\",\n    \"wasm-rsa\",\n    \"typescript\",\n    \"cryptography\"\n  ],\n  \"main\": \"lib/index.node.js\",\n  \"browser\": \"lib/index.browser.js\",\n  \"scripts\": {\n    \"build\": \"npm run build:wasm; npm run build:browser; npm run build:node\",\n    \"build:browser\": \"tsc -p configs/tsconfig.browser.json\",\n    \"build:node\": \"tsc -p configs/tsconfig.node.json\",\n    \"build:wasm\": \"sh ./scripts/build.sh\",\n    \"publish\": \"npm publish --access\",\n    \"test:rust\": \"cargo test\",\n    \"test:ts\": \"TS_NODE_PROJECT=./configs/tsconfig.node.json mocha --timeout 999999999 --require ts-node/register src/tests/**/*.spec.ts\",\n    \"test\": \"npm run test:rust; npm run test:ts\",\n    \"doc\": \"rm -rf ./docs/; esdoc\",\n    \"show_doc\": \"serve ./docs\"\n  },\n  \"husky\": {\n    \"hooks\": {\n      \"pre-commit\": \"lint-staged\",\n      \"pre-push\": \"npm test\"\n    }\n  },\n  \"lint-staged\": {\n    \"src/*.ts\": [\n      \"tslint\",\n      \"git add\"\n    ]\n  },\n  \"devDependencies\": {\n    \"@types/chai\": \"4.1.6\",\n    \"@types/mocha\": \"5.2.5\",\n    \"@types/node\": \"10.9.4\",\n    \"chai\": \"^4.1.2\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-ecmascript-proposal-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"esdoc-typescript-plugin\": \"^1.0.1\",\n    \"husky\": \"^1.3.1\",\n    \"lint-staged\": \"^7.1.2\",\n    \"mocha\": \"^5.0.1\",\n    \"serve\": \"^11.0.0\",\n    \"ts-node\": \"^7.0.1\",\n    \"tslint\": \"^5.11.0\",\n    \"tslint-eslint-rules\": \"^5.3.1\",\n    \"typescript\": \"^3.3.1\"\n  },\n  \"dependencies\": {\n    \"randombytes\": \"^2.1.0\"\n  }\n}\n",
-    "longname": "/home/fanyshu/Projects/libs/wasm-rsa/package.json",
+    "longname": "/home/fanyshu/projects/main/wasm-rsa/package.json",
     "name": "package.json",
     "static": true,
     "access": "public"

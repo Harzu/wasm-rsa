@@ -9,20 +9,20 @@ let d = null
 let e = null
 let primes = null
 
-describe('RSA encrypt/decrypt', () => {
+describe('OK: RSA encrypt/decrypt', () => {
   beforeEach(async () => {
     rsaOne = await RSASetup()
     rsaTwo = await RSASetup()
 
-    const privateKeys = rsaOne.generateRSAPrivate(2048)
-    n = privateKeys.n
-    d = privateKeys.d
-    e = privateKeys.e
-    primes = privateKeys.primes
+    const privateKey = rsaOne.generateRSAPrivate(2048)
+    n = privateKey.n
+    d = privateKey.d
+    e = privateKey.e
+    primes = privateKey.primes
     rsaTwo.createRSAPublic(n, e)
   })
 
-  it('encrypt message', () => {
+  it('OK: encrypt message', () => {
     // Arrange
     const message = 'hello'
     // Act
@@ -32,7 +32,7 @@ describe('RSA encrypt/decrypt', () => {
     expect(encryptedMessage).not.to.be.equal(message)
   })
 
-  it('encrypt message with invalid message', () => {
+  it('FAIL: encrypt message with invalid message', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -45,7 +45,7 @@ describe('RSA encrypt/decrypt', () => {
     expect(errorMessage).not.to.be.equal(null)
   })
 
-  it('decrypt message', () => {
+  it('OK: decrypt message', () => {
     // Arrange
     const message = 'hello world!'
     // Act
@@ -55,7 +55,7 @@ describe('RSA encrypt/decrypt', () => {
     expect(decryptedMessage).to.be.equal(message)
   })
 
-  it('decrypt with invalid encryptedMessage', () => {
+  it('FAIL: decrypt with invalid encryptedMessage', () => {
     // Arrange
     let errorMessage = null
     // Act
@@ -68,7 +68,7 @@ describe('RSA encrypt/decrypt', () => {
     expect(errorMessage).not.to.be.equal(null)
   })
 
-  it('decrypt message with rsa generate from n, d, e, primes', async () => {
+  it('OK: decrypt message with rsa generate from n, d, e, primes', async () => {
     // Arrange
     const message = 'hello'
     // Act

@@ -306,9 +306,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/rsa.ts~rsa#creatersaprivatefrompem",
+    "class/src/Rsa.ts~RSA.html#instance-method-createRSAPrivateFromPEM",
+    "src/Rsa.ts~RSA#createRSAPrivateFromPEM",
+    "method"
+  ],
+  [
     "src/rsa.ts~rsa#creatersapublic",
     "class/src/Rsa.ts~RSA.html#instance-method-createRSAPublic",
     "src/Rsa.ts~RSA#createRSAPublic",
+    "method"
+  ],
+  [
+    "src/rsa.ts~rsa#creatersapublicfrompem",
+    "class/src/Rsa.ts~RSA.html#instance-method-createRSAPublicFromPEM",
+    "src/Rsa.ts~RSA#createRSAPublicFromPEM",
     "method"
   ],
   [
@@ -348,9 +360,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/rsa.ts~rsa#privatekeytopem",
+    "class/src/Rsa.ts~RSA.html#instance-method-privateKeyToPEM",
+    "src/Rsa.ts~RSA#privateKeyToPEM",
+    "method"
+  ],
+  [
     "src/rsa.ts~rsa#publicencrypt",
     "class/src/Rsa.ts~RSA.html#instance-method-publicEncrypt",
     "src/Rsa.ts~RSA#publicEncrypt",
+    "method"
+  ],
+  [
+    "src/rsa.ts~rsa#publickeytopem",
+    "class/src/Rsa.ts~RSA.html#instance-method-publicKeyToPEM",
+    "src/Rsa.ts~RSA#publicKeyToPEM",
     "method"
   ],
   [
